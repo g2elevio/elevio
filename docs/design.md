@@ -13,7 +13,7 @@
 - Tokens de cor em `src/app/globals.css` (`--background`, `--foreground`, com variante escura por `prefers-color-scheme`). São os valores padrão do scaffold e serão substituídos pela identidade da Elevio.
 - Fontes: Geist e Geist Mono via `next/font` em `src/app/layout.tsx`.
 - Helper `cn` em `src/lib/utils.ts` para compor classes Tailwind.
-- Ainda não há componentes próprios.
+- `src/components/lead-form.tsx`: formulário de diagnóstico. Campos com rótulo visível, erros por campo ligados via `aria-describedby`, `aria-invalid` nos campos com erro, mensagem geral com `role="alert"`, botão desabilitado durante o envio e checkbox de consentimento desmarcado. Cores provisórias (verde `emerald-700`) até a identidade visual.
 
 ## Interação
 
@@ -31,7 +31,7 @@ Requisitos específicos do MVP:
 - Breakpoints Tailwind padrão; nenhuma rolagem horizontal a partir de 360 px.
 - Estados a cobrir: envio em andamento, erro de validação por campo, erro de servidor e sucesso (antes do redirecionamento ao WhatsApp).
 - Revisão de UI: rodar a skill `web-design-guidelines` e o Lighthouse mobile (meta 90+ em Performance) antes de concluir cada seção.
-- Nenhuma revisão de interface foi feita ainda: a página atual é só um marcador.
+- Formulário verificado a 360 px de largura sem rolagem horizontal (Playwright). Ainda sem auditoria Lighthouse nem revisão `web-design-guidelines`.
 
 ## Manutenção
 
