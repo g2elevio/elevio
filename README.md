@@ -12,7 +12,7 @@ pnpm dev          # http://localhost:3000
 pnpm check        # lint, tipos, regras locais, testes e build
 ```
 
-A página atual não precisa de banco nem de credenciais. A gravação de leads (próxima entrega) usa PostgreSQL via `DATABASE_URL` em `.env.local`; veja [docs/onboarding.md](docs/onboarding.md).
+A página e os checks rodam sem banco. Para enviar o formulário de diagnóstico, configure um PostgreSQL em `DATABASE_URL` (`.env.local`) e aplique as migrations; veja [docs/onboarding.md](docs/onboarding.md).
 
 ## Documentação
 
@@ -26,4 +26,4 @@ A página atual não precisa de banco nem de credenciais. A gravação de leads 
 
 ## Próxima entrega
 
-Captura de leads de ponta a ponta: tabela `leads`, Server Action com validação Zod e formulário que grava o lead e abre o WhatsApp com nome e segmento. Depende do número de WhatsApp comercial e de um banco PostgreSQL de desenvolvimento. Detalhes em [PRODUCT.md](PRODUCT.md#próxima-entrega).
+Hero com os dois CTAs e botão flutuante de WhatsApp. Detalhes em [PRODUCT.md](PRODUCT.md#próxima-entrega).

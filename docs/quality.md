@@ -24,8 +24,8 @@ Rode `pnpm check` antes de entregar qualquer mudança. Durante o trabalho, `pnpm
 
 ## Estratégia de testes
 
-- Lógica pura com regra de negócio ganha testes Vitest: cálculo do simulador, validação do WhatsApp brasileiro, montagem da URL `wa.me`.
-- A Server Action de leads deve ter testes de validação (consentimento ausente, telefone inválido) sem banco real; a gravação real é verificada contra um banco de desenvolvimento e registrada como tal.
+- Lógica pura com regra de negócio ganha testes Vitest. Hoje: telefone brasileiro e `leadSchema` (`validation.test.ts`); Server Action com repositório mockado (`actions.test.ts`): gravação com consentimento, link `wa.me`, erros por campo com valores preservados, honeypot e falha de banco sem dados pessoais no log. O cálculo do simulador entra com ele.
+- A gravação real não tem teste automatizado: foi verificada contra um PostgreSQL 16 local com navegador (ver [setup.md](setup.md)). Repita esse roteiro, descrito em [onboarding.md](onboarding.md#verificar), ao mudar schema ou action.
 - Testes de DOM e E2E entram quando os fluxos de formulário e simulador existirem e precisarem deles.
 - Critérios de produto (Lighthouse 90+, 360 px, teclado, contraste AA) são verificados manualmente ou com Lighthouse até haver automação.
 

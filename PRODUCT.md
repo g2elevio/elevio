@@ -59,7 +59,7 @@ Blog, ferramentas gratuitas (raio-X do site, análise de persuasão), chat de IA
 ## Restrições e decisões técnicas
 
 - Next.js 16 (App Router), React 19, TypeScript strict, Tailwind CSS 4, pnpm, Node.js 22.12 ou superior.
-- Persistência de leads com Drizzle ORM + PostgreSQL (driver `pg`, runtime Node.js), padrão do toolkit. Atende "lugar consultável" com um provedor PostgreSQL de plano gratuito; a escolha do provedor está pendente.
+- Persistência de leads com Drizzle ORM + PostgreSQL (driver `pg`, runtime Node.js), padrão do toolkit. Provedor escolhido: Supabase (plano gratuito). A tabela `leads` tem RLS ligado e sem políticas, para a API pública do Supabase não expor os leads.
 - Formulário simples com recursos nativos + Server Action e validação Zod; sem biblioteca de formulários enquanto não houver necessidade.
 - Página majoritariamente estática (Server Components); componentes de cliente só no simulador, no formulário, no acordeão e nos eventos de analytics.
 - Hospedagem preferida: Vercel (plano gratuito), por integração nativa com Next.js e pelas skills instaladas. Confirmar se o uso comercial cabe no plano gratuito antes de publicar.
@@ -80,8 +80,7 @@ Meta sugerida antes de publicar: conversão de visita para formulário acima de 
 
 | Pendência | Impacto | Próximo passo |
 |---|---|---|
-| Número de WhatsApp comercial | Redirecionamento do formulário e botão flutuante | Informar o número; entra como variável de ambiente na próxima entrega |
-| Provedor PostgreSQL (ex.: Neon ou Supabase, plano gratuito) | Gravação de leads em produção | Criar o banco e configurar `DATABASE_URL` no host |
+| Projeto Supabase criado e `DATABASE_URL` configurada no host | Gravação de leads em produção | Criar o projeto, aplicar a migration e configurar as variáveis (ver `docs/onboarding.md`) |
 | CNPJ, e-mail e endereço de contato | Rodapé e dados estruturados LocalBusiness | Fornecer os dados reais |
 | Fundadores: nomes, foto e trajetória | Seção Sobre | Fornecer texto e foto autorizados |
 | Premissas do simulador (taxa de conversão sem e com automação, ticket opcional) | Credibilidade do simulador | Aprovar valores conservadores e a fonte de cada um |
@@ -105,7 +104,9 @@ Checks técnicos do setup (lint, tipos, testes, build) ficam em [docs/quality.md
 
 ## Próxima entrega
 
-**Captura de leads de ponta a ponta:** tabela `leads` no schema Drizzle (com registro do consentimento), Server Action com validação Zod (WhatsApp brasileiro, consentimento obrigatório), formulário acessível com estado de envio e redirecionamento ao WhatsApp com nome e segmento. Critério: com um banco de desenvolvimento, um envio válido grava o lead e abre o link `wa.me` correto; envios inválidos mostram o erro junto do campo e não gravam nada.
+A captura de leads está implementada (formulário, validação, gravação com consentimento e redirecionamento ao WhatsApp (45) 99996-8287). Falta só ligá-la ao Supabase de produção.
+
+Próxima tarefa: **hero e botão flutuante de WhatsApp**. Hero com a promessa, os dois CTAs (formulário e simulador) e o botão fixo de WhatsApp visível em todas as seções no mobile. Critério: os CTAs levam às âncoras corretas e o botão abre `wa.me/5545999968287` a partir de 360 px sem cobrir o envio do formulário. O mockup do agente de IA e o texto final da promessa dependem da identidade visual.
 
 ## Manutenção
 
