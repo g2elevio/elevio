@@ -1,31 +1,50 @@
+import { MapPin } from "lucide-react";
 import Link from "next/link";
 import { site } from "@/lib/site";
 import { WHATSAPP_CONTACT_URL } from "@/lib/whatsapp";
+import { Logo } from "./logo";
+import { WhatsappIcon } from "./whatsapp-icon";
+
+const linkClass = "w-fit text-muted transition-colors duration-300 hover:text-foreground";
 
 // CNPJ e e-mail ainda não foram fornecidos (pendência em PRODUCT.md): entram aqui quando existirem.
 export function SiteFooter() {
   return (
-    <footer className="border-t border-neutral-300 dark:border-neutral-700">
+    <footer className="relative z-1 mt-auto overflow-hidden border-t border-line bg-surface/40">
+      <div aria-hidden="true" className="divider-glow absolute inset-x-0 top-0" />
+      <div aria-hidden="true" className="absolute -bottom-40 left-1/2 h-80 w-3xl -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse,rgb(79_107_245/0.18),transparent_70%)]" />
       {/* pb-24 deixa o fim do rodapé livre do botão flutuante de WhatsApp. */}
-      <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-4 pt-10 pb-24 sm:flex-row sm:justify-between">
-        <div className="flex flex-col gap-2">
-          <p className="text-lg font-semibold">{site.name}</p>
-          <p className="leading-relaxed">Soluções digitais para pequenas e médias empresas.</p>
-          <p>
+      <div className="container-page relative grid gap-10 pt-14 pb-24 sm:grid-cols-[1.4fr_1fr_1fr]">
+        <div className="flex flex-col gap-4">
+          <Logo />
+          <p className="max-w-xs leading-relaxed text-muted">
+            Elevando o seu negócio através da tecnologia. Soluções digitais para pequenas e médias empresas.
+          </p>
+          <p className="flex items-center gap-2 text-muted">
+            <MapPin aria-hidden="true" className="size-4 text-brand-cyan" />
             {site.city}, {site.state}
           </p>
-          <p className="text-sm text-neutral-700 dark:text-neutral-300">
-            © {new Date().getFullYear()} {site.name}
-          </p>
         </div>
-        <nav aria-label="Rodapé" className="flex flex-col gap-2">
-          <a href={WHATSAPP_CONTACT_URL} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">
+        <nav aria-label="Seções" className="flex flex-col gap-2.5">
+          <p className="mb-1 text-sm font-bold text-foreground">Navegação</p>
+          <Link href="/#servicos" className={linkClass}>Soluções</Link>
+          <Link href="/#simulador" className={linkClass}>Simulador</Link>
+          <Link href="/#como-funciona" className={linkClass}>Processo</Link>
+          <Link href="/#faq" className={linkClass}>Dúvidas</Link>
+        </nav>
+        <nav aria-label="Contato e privacidade" className="flex flex-col gap-2.5">
+          <p className="mb-1 text-sm font-bold text-foreground">Contato</p>
+          <a href={WHATSAPP_CONTACT_URL} target="_blank" rel="noopener noreferrer" className={`${linkClass} flex items-center gap-2`}>
+            <WhatsappIcon className="size-4 text-emerald-400" />
             WhatsApp: {site.whatsappDisplay}
           </a>
-          <Link href="/privacidade" className="underline underline-offset-4">
+          <Link href="/privacidade" className={linkClass}>
             Política de privacidade
           </Link>
         </nav>
+        <p className="border-t border-line pt-6 text-sm text-subtle sm:col-span-3">
+          © {new Date().getFullYear()} {site.name}. Todos os direitos reservados.
+        </p>
       </div>
     </footer>
   );

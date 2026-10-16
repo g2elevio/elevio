@@ -22,10 +22,11 @@ Versões exatas ficam no `pnpm-lock.yaml`.
 ```text
 src/
 ├── app/
-│   ├── layout.tsx      # HTML pt-BR, fontes Geist, metadata base, rodapé e botão flutuante de WhatsApp
+│   ├── layout.tsx      # HTML pt-BR, fonte Manrope, script que marca .js, cabeçalho, efeitos, rodapé e WhatsApp
 │   ├── page.tsx        # landing page: hero, dores, serviços, #simulador, como funciona, sobre, FAQ, #diagnostico
 │   ├── privacidade/page.tsx # política de privacidade (LGPD)
-│   ├── opengraph-image.tsx # imagem de compartilhamento provisória (só texto)
+│   ├── opengraph-image.tsx # imagem de compartilhamento a partir do banner da marca
+│   ├── icon.svg        # ícone do site (símbolo do logo)
 │   ├── sitemap.ts      # / e /privacidade
 │   ├── robots.ts       # libera tudo e aponta o sitemap
 │   └── globals.css     # Tailwind e tokens de cor
@@ -38,7 +39,16 @@ src/
 │   ├── pain-points.tsx # quatro dores comuns
 │   ├── services.tsx    # seis serviços com benefícios
 │   ├── simulator.tsx   # simulador (client): slider de leads e taxa atual do visitante
-│   ├── hero.tsx        # hero com CTA e mockup do agente de IA no WhatsApp (HTML/CSS, sem imagem)
+│   ├── hero.tsx        # hero com CTAs, fundo animado e mockup do WhatsApp
+│   ├── hero-steps.tsx  # escadaria do logo que acende sob o cursor (client)
+│   ├── whatsapp-mockup.tsx # mockup animado do agente de IA (HTML/CSS, sem imagem)
+│   ├── interactive-effects.tsx # client: reveal ao rolar, cabeçalho ao rolar, luz do cursor e cartões .spot
+│   ├── site-header.tsx # cabeçalho fixo com navegação e CTA
+│   ├── section-heading.tsx # sobretítulo, título e texto padrão das seções
+│   ├── logo.tsx / brand-steps.tsx # logo vetorial e arte de degraus do banner
+│   ├── segments.tsx    # "Para quem é": cartões com os segmentos atendidos
+│   ├── integration-flow.tsx # banner "tudo conectado" em Serviços
+│   ├── diagnosis-cta.tsx # seção final #diagnostico com o formulário
 │   ├── lead-form.tsx   # formulário de diagnóstico (client, useActionState)
 │   ├── whatsapp-button.tsx # botão fixo de WhatsApp, em todas as páginas
 │   └── whatsapp-icon.tsx

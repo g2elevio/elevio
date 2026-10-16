@@ -22,6 +22,7 @@
 | `typecheck` roda `next typegen` antes do `tsc` | Num checkout limpo, `LayoutProps` (tipo gerado pelo Next) não existe e o `tsc` falhava; observado ao validar o clone do repositório |
 | `globals.css` usa `--font-sans` | O scaffold carregava Geist mas aplicava Arial no `body` |
 | Página inicial trocada por um marcador em pt-BR | Remover conteúdo de exemplo do scaffold sem antecipar seções do MVP |
+| `lucide-react@1.58.0` e fonte Manrope | Identidade visual (16/10/2026): ícones pedidos pelo produto, importados por nome (tree-shaking, só os usados entram no bundle); Manrope é a fonte do banner da marca, via `next/font/google`. Animações e luz do cursor feitas com CSS e um componente de cliente próprio, sem biblioteca de animação |
 | Context7 em `.mcp.json` (HTTP, sem token) | Sem conexão Context7 verificável neste ambiente; arquivo do template do toolkit |
 
 Documentação oficial consultada: [instalação Next](https://nextjs.org/docs/app/getting-started/installation), [CLI create-next-app](https://nextjs.org/docs/app/api-reference/cli/create-next-app), [Drizzle PostgreSQL](https://orm.drizzle.team/docs/get-started-postgresql) e metadados do registry npm. O Context7 não foi consultado (bloqueado pela rede deste ambiente, ver Verificações).

@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowRight, LoaderCircle } from "lucide-react";
 import Link from "next/link";
 import { useActionState, useEffect, useId } from "react";
 import { submitLead } from "@/features/leads/actions";
@@ -10,7 +11,7 @@ import { cn } from "@/lib/utils";
 const initialState: LeadFormState = { status: "idle" };
 
 const inputClass =
-  "w-full rounded-lg border border-neutral-400 bg-white px-3 py-3 text-base text-neutral-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700 aria-invalid:border-red-700";
+  "w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-base text-foreground placeholder:text-subtle transition-colors duration-300 hover:border-white/30 focus-visible:border-brand-cyan aria-invalid:border-red-400 [&>option]:bg-surface";
 
 export function LeadForm() {
   const [state, formAction, pending] = useActionState(submitLead, initialState);
@@ -24,11 +25,11 @@ export function LeadForm() {
 
   if (state.status === "success") {
     return (
-      <div role="status" className="rounded-lg border border-emerald-700 p-4">
+      <div role="status" className="rounded-2xl border border-brand-cyan/40 bg-brand-cyan/5 p-5">
         <p className="font-medium">Pedido recebido! Estamos abrindo o WhatsApp para você.</p>
         <p className="mt-2">
           Se não abrir sozinho,{" "}
-          <a className="font-medium underline" href={state.whatsappUrl}>
+          <a className="font-semibold text-brand-cyan underline underline-offset-4" href={state.whatsappUrl}>
             toque aqui para continuar no WhatsApp
           </a>
           .
@@ -45,7 +46,7 @@ export function LeadForm() {
   });
   const error = (name: LeadField) =>
     errors[name] ? (
-      <p id={`${id}-${name}-error`} className="mt-1 text-sm text-red-700 dark:text-red-400">
+      <p id={`${id}-${name}-error`} className="mt-1.5 text-sm text-red-300">
         {errors[name]}
       </p>
     ) : null;
@@ -53,17 +54,17 @@ export function LeadForm() {
   return (
     <form action={formAction} noValidate className="flex flex-col gap-4">
       <div>
-        <label htmlFor={`${id}-name`} className="mb-1 block font-medium">Nome</label>
+        <label htmlFor={`${id}-name`} className="mb-1.5 block text-sm font-semibold">Nome</label>
         <input {...field("name")} type="text" autoComplete="name" required maxLength={100} defaultValue={values.name} className={inputClass} />
         {error("name")}
       </div>
       <div>
-        <label htmlFor={`${id}-whatsapp`} className="mb-1 block font-medium">WhatsApp com DDD</label>
+        <label htmlFor={`${id}-whatsapp`} className="mb-1.5 block text-sm font-semibold">WhatsApp com DDD</label>
         <input {...field("whatsapp")} type="tel" inputMode="tel" autoComplete="tel-national" required placeholder="(45) 99999-9999" defaultValue={values.whatsapp} className={inputClass} />
         {error("whatsapp")}
       </div>
       <div>
-        <label htmlFor={`${id}-segment`} className="mb-1 block font-medium">Segmento</label>
+        <label htmlFor={`${id}-segment`} className="mb-1.5 block text-sm font-semibold">Segmento</label>
         <select {...field("segment")} required defaultValue={values.segment ?? ""} className={inputClass}>
           <option value="" disabled>Escolha uma opção</option>
           {SEGMENTS.map((segment) => <option key={segment}>{segment}</option>)}
@@ -71,7 +72,7 @@ export function LeadForm() {
         {error("segment")}
       </div>
       <div>
-        <label htmlFor={`${id}-challenge`} className="mb-1 block font-medium">Principal dificuldade</label>
+        <label htmlFor={`${id}-challenge`} className="mb-1.5 block text-sm font-semibold">Principal dificuldade</label>
         <select {...field("challenge")} required defaultValue={values.challenge ?? ""} className={inputClass}>
           <option value="" disabled>Escolha uma opção</option>
           {CHALLENGES.map((challenge) => <option key={challenge}>{challenge}</option>)}
@@ -84,28 +85,38 @@ export function LeadForm() {
       </div>
       <div>
         <div className="flex items-start gap-3">
-          <input {...field("consent")} type="checkbox" required className="mt-1 size-5 shrink-0 accent-emerald-700" />
-          <label htmlFor={`${id}-consent`} className="text-sm leading-relaxed">{CONSENT_TEXT}</label>
+          <input {...field("consent")} type="checkbox" required className="mt-0.5 size-5 shrink-0 accent-brand-blue" />
+          <label htmlFor={`${id}-consent`} className="text-sm leading-relaxed text-muted">{CONSENT_TEXT}</label>
         </div>
         <p className="mt-1 pl-8 text-sm">
-          <Link href="/privacidade" target="_blank" className="underline underline-offset-4">
+          <Link href="/privacidade" target="_blank" className="text-brand-cyan underline underline-offset-4">
             Leia a política de privacidade
           </Link>
         </p>
         {error("consent")}
       </div>
       {state.status === "error" ? (
-        <p role="alert" className="text-sm font-medium text-red-700 dark:text-red-400">{state.message}</p>
+        <p role="alert" className="rounded-xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200">{state.message}</p>
       ) : null}
       <button
         type="submit"
         disabled={pending}
         className={cn(
-          "rounded-lg bg-emerald-700 px-5 py-3 text-base font-semibold text-white hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700",
+          "btn btn-primary w-full",
           pending && "cursor-wait opacity-70",
         )}
       >
-        {pending ? "Enviando..." : "Quero meu diagnóstico gratuito"}
+        {pending ? (
+          <>
+            <LoaderCircle aria-hidden="true" className="size-5 animate-spin" />
+            Enviando...
+          </>
+        ) : (
+          <>
+            Quero meu diagnóstico gratuito
+            <ArrowRight aria-hidden="true" className="size-5" />
+          </>
+        )}
       </button>
     </form>
   );

@@ -1,4 +1,6 @@
+import { Plus } from "lucide-react";
 import { site } from "@/lib/site";
+import { SectionHeading } from "./section-heading";
 
 // Respostas sem preço, prazo ou condição fixa: esses valores dependem da proposta de cada cliente.
 const QUESTIONS = [
@@ -46,18 +48,38 @@ const QUESTIONS = [
 
 export function Faq() {
   return (
-    <section aria-labelledby="faq-titulo" className="mx-auto flex w-full max-w-3xl flex-col gap-6">
-      <h2 id="faq-titulo" className="text-2xl font-semibold sm:text-3xl">Perguntas frequentes</h2>
-      <div className="flex flex-col divide-y divide-neutral-300 border-y border-neutral-300 dark:divide-neutral-700 dark:border-neutral-700">
-        {QUESTIONS.map((item) => (
-          <details key={item.question} className="group">
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-lg font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700 [&::-webkit-details-marker]:hidden">
-              {item.question}
-              <span aria-hidden="true" className="text-2xl leading-none text-emerald-700 transition-transform group-open:rotate-45 motion-reduce:transition-none dark:text-emerald-400">
-                +
+    <section id="faq" aria-labelledby="faq-titulo" className="container-page grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+      <div className="lg:sticky lg:top-28 lg:self-start">
+        <SectionHeading
+          id="faq-titulo"
+          eyebrow="Dúvidas"
+          title={
+            <>
+              Perguntas <span className="text-gradient">frequentes</span>
+            </>
+          }
+        >
+          <p>Não encontrou o que procurava? Chame a gente no WhatsApp, respondemos com prazer.</p>
+        </SectionHeading>
+      </div>
+      <div className="flex flex-col gap-3">
+        {QUESTIONS.map((item, index) => (
+          <details
+            key={item.question}
+            data-reveal
+            style={{ "--d": `${(index % 4) * 70}ms` } as React.CSSProperties}
+            className="group glass rounded-2xl transition-colors duration-300 open:border-brand-cyan/30 open:bg-white/6 hover:border-white/20"
+          >
+            <summary className="flex cursor-pointer list-none items-center gap-4 rounded-2xl p-5 text-lg font-bold [&::-webkit-details-marker]:hidden">
+              <span className="flex-1">{item.question}</span>
+              <span
+                aria-hidden="true"
+                className="flex size-8 shrink-0 items-center justify-center rounded-full border border-white/15 text-brand-cyan transition-transform duration-300 group-open:rotate-45 group-open:bg-brand-cyan/10"
+              >
+                <Plus className="size-4" />
               </span>
             </summary>
-            <p className="pb-4 leading-relaxed">{item.answer}</p>
+            <p className="px-5 pb-5 leading-relaxed text-muted">{item.answer}</p>
           </details>
         ))}
       </div>
