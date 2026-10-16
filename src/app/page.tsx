@@ -1,3 +1,5 @@
+import { About } from "@/components/about";
+import { Faq } from "@/components/faq";
 import { Hero } from "@/components/hero";
 import { HowItWorks } from "@/components/how-it-works";
 import { LeadForm } from "@/components/lead-form";
@@ -7,12 +9,14 @@ import { Simulator } from "@/components/simulator";
 
 export default function Home() {
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-20 px-4 pt-12 pb-28">
+    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-20 px-4 pt-12 pb-16">
       <Hero />
       <PainPoints />
       <Services />
       <Simulator />
       <HowItWorks />
+      <About />
+      <Faq />
       <section
         id="diagnostico"
         aria-labelledby="diagnostico-titulo"

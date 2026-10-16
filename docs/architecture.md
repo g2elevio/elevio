@@ -22,11 +22,15 @@ Versões exatas ficam no `pnpm-lock.yaml`.
 ```text
 src/
 ├── app/
-│   ├── layout.tsx      # HTML pt-BR, fontes Geist, metadata base, botão flutuante de WhatsApp
-│   ├── page.tsx        # landing page: hero, dores, serviços, #simulador, como funciona, #diagnostico
+│   ├── layout.tsx      # HTML pt-BR, fontes Geist, metadata base, rodapé e botão flutuante de WhatsApp
+│   ├── page.tsx        # landing page: hero, dores, serviços, #simulador, como funciona, sobre, FAQ, #diagnostico
+│   ├── privacidade/page.tsx # política de privacidade (LGPD)
 │   └── globals.css     # Tailwind e tokens de cor
 ├── components/
+│   ├── about.tsx       # sobre: fundadores
+│   ├── faq.tsx         # perguntas frequentes em <details>/<summary>
 │   ├── how-it-works.tsx # quatro passos (lista ordenada)
+│   ├── site-footer.tsx # rodapé em todas as páginas (cidade, WhatsApp, política)
 │   ├── pain-points.tsx # quatro dores comuns
 │   ├── services.tsx    # seis serviços com benefícios
 │   ├── simulator.tsx   # simulador (client): slider de leads e taxa atual do visitante
@@ -51,7 +55,7 @@ src/
     ├── env-schema.ts   # schemas Zod de ambiente, erro sem vazar valores
     ├── env.ts          # leitura de ambiente (server-only)
     ├── logger.ts       # Pino com redação de segredos (server-only)
-    ├── site.ts         # dados públicos da Elevio (WhatsApp)
+    ├── site.ts         # dados públicos da Elevio (cidade, WhatsApp)
     ├── whatsapp.ts     # links wa.me (contato geral e mensagem do lead)
     ├── utils.ts        # cn() para classes Tailwind
     └── *.test.ts       # testes de ambiente e redação de logs
@@ -66,7 +70,7 @@ vitest.config.mts
 
 Captura de leads (implementada):
 
-1. A página é estática (Server Components: hero, seções de conteúdo, botão de WhatsApp). Os componentes de cliente são `LeadForm` e `Simulator`; acordeão do FAQ e analytics também serão ilhas de cliente.
+1. A página é estática (Server Components: hero, seções de conteúdo, FAQ com `<details>`, rodapé, botão de WhatsApp e `/privacidade`). Os componentes de cliente são `LeadForm` e `Simulator`; analytics também será ilha de cliente.
 2. `LeadForm` envia para `submitLead` via `useActionState`. A action descarta envios com o campo honeypot preenchido, valida com `leadSchema` e grava com `saveLead`, junto do texto de consentimento e do horário.
 3. Em erro de validação, devolve mensagens por campo e os valores digitados (o React reinicia o formulário após a action; os valores voltam por `defaultValue`). Em falha de banco, registra só o código do erro e pede nova tentativa.
 4. Em sucesso, o cliente navega para `wa.me/5545999968287` com nome e segmento na mensagem. O evento de conversão entra com a configuração de analytics.
