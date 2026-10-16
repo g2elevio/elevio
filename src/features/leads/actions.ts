@@ -4,7 +4,7 @@ import { logger } from "@/lib/logger";
 import { CONSENT_TEXT } from "./options";
 import { saveLead } from "./repository";
 import { leadSchema, type LeadField, type LeadFormState } from "./validation";
-import { buildWhatsappUrl, WHATSAPP_URL } from "./whatsapp";
+import { buildWhatsappUrl, WHATSAPP_URL } from "@/lib/whatsapp";
 
 const TEXT_FIELDS = ["name", "whatsapp", "segment", "challenge"] as const;
 

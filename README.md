@@ -26,4 +26,4 @@ A página e os checks rodam sem banco. Para enviar o formulário de diagnóstico
 
 ## Próxima entrega
 
-Hero com os dois CTAs e botão flutuante de WhatsApp. Detalhes em [PRODUCT.md](PRODUCT.md#próxima-entrega).
+Seções de dores, serviços e como funciona. Detalhes em [PRODUCT.md](PRODUCT.md#próxima-entrega).
