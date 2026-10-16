@@ -23,9 +23,12 @@ Versões exatas ficam no `pnpm-lock.yaml`.
 src/
 ├── app/
 │   ├── layout.tsx      # HTML pt-BR, fontes Geist, metadata base, botão flutuante de WhatsApp
-│   ├── page.tsx        # landing page: hero + seção #diagnostico
+│   ├── page.tsx        # landing page: hero, dores, serviços, como funciona, #diagnostico
 │   └── globals.css     # Tailwind e tokens de cor
 ├── components/
+│   ├── how-it-works.tsx # quatro passos (lista ordenada)
+│   ├── pain-points.tsx # quatro dores comuns
+│   ├── services.tsx    # seis serviços com benefícios
 │   ├── hero.tsx        # hero com CTA e mockup do agente de IA no WhatsApp (HTML/CSS, sem imagem)
 │   ├── lead-form.tsx   # formulário de diagnóstico (client, useActionState)
 │   ├── whatsapp-button.tsx # botão fixo de WhatsApp, em todas as páginas
@@ -59,7 +62,7 @@ vitest.config.mts
 
 Captura de leads (implementada):
 
-1. A página é estática (Server Components: hero, botão de WhatsApp). O único componente de cliente é `LeadForm`; simulador, acordeão do FAQ e analytics também serão ilhas de cliente.
+1. A página é estática (Server Components: hero, seções de conteúdo, botão de WhatsApp). O único componente de cliente é `LeadForm`; simulador, acordeão do FAQ e analytics também serão ilhas de cliente.
 2. `LeadForm` envia para `submitLead` via `useActionState`. A action descarta envios com o campo honeypot preenchido, valida com `leadSchema` e grava com `saveLead`, junto do texto de consentimento e do horário.
 3. Em erro de validação, devolve mensagens por campo e os valores digitados (o React reinicia o formulário após a action; os valores voltam por `defaultValue`). Em falha de banco, registra só o código do erro e pede nova tentativa.
 4. Em sucesso, o cliente navega para `wa.me/5545999968287` com nome e segmento na mensagem. O evento de conversão entra com a configuração de analytics.
