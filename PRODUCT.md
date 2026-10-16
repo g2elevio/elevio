@@ -104,9 +104,9 @@ Checks técnicos do setup (lint, tipos, testes, build) ficam em [docs/quality.md
 
 ## Próxima entrega
 
-Já implementado: captura de leads gravando no Supabase, hero com o CTA de diagnóstico e mockup do agente de IA, e botão flutuante de WhatsApp. O CTA "Simular meu resultado" entra junto com o simulador, para não apontar para uma seção vazia.
+Já implementado: hero, dores, serviços, como funciona, formulário de diagnóstico gravando no Supabase e botão flutuante de WhatsApp.
 
-Próxima tarefa: **seções de conteúdo sem dados pendentes**: diagnóstico de dores, os seis serviços e como funciona (quatro passos). Critério: textos sem números ou depoimentos, leitura confortável a 360 px e ordem igual à do MVP. O simulador vem depois que as premissas forem aprovadas.
+O que falta do MVP depende de informações da Elevio (ver pendências): simulador (premissas), Sobre (fundadores), FAQ (respostas oficiais), rodapé (CNPJ e contato) e política de privacidade. Próxima tarefa: **simulador**, assim que as premissas forem aprovadas. Critério: slider de leads por mês recalcula em tempo real as vendas estimadas com e sem automação, mostra as premissas e o aviso de estimativa, e o CTA "Simular meu resultado" entra no hero.
 
 ## Manutenção
 

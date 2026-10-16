@@ -26,4 +26,4 @@ A página e os checks rodam sem banco. Para enviar o formulário de diagnóstico
 
 ## Próxima entrega
 
-Seções de dores, serviços e como funciona. Detalhes em [PRODUCT.md](PRODUCT.md#próxima-entrega).
+Simulador de resultado, depois que as premissas forem aprovadas. Detalhes em [PRODUCT.md](PRODUCT.md#próxima-entrega).
