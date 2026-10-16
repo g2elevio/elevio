@@ -87,7 +87,7 @@ Meta sugerida antes de publicar: conversão de visita para formulário acima de 
 | Foto e trajetória dos fundadores (opcional) | Seção Sobre mostra nome, cargo e iniciais | Fornecer foto e texto autorizados, se quiser |
 | Revisão da política de privacidade | Texto-base publicado em `/privacidade`, escrito a partir do que o site faz hoje | Revisar com apoio jurídico; atualizar ao ativar analytics |
 | IDs do GA4 e do Meta Pixel; banner de consentimento de cookies | Analytics e conformidade LGPD | Criar as propriedades e decidir o modelo de consentimento |
-| Identidade visual (logo, cores, tipografia) e domínio | Design, imagem de compartilhamento (hoje só texto) e `SITE_URL` | Fornecer a marca e, com o domínio, definir `SITE_URL` no host |
+| Domínio | `SITE_URL` e URLs canônicas | Com o domínio, definir `SITE_URL` no host. A identidade visual (logo, cores e banner) foi fornecida em 16/10/2026 e aplicada ao site |
 | Respostas oficiais do FAQ (preço, prazo, contrato) | FAQ publicado sem valores: preço, prazo e condições remetem à proposta | Revisar o texto e trocar quando houver respostas fixas |
 
 ## Critérios de aceitação

@@ -1,70 +1,55 @@
-import { WhatsappIcon } from "./whatsapp-icon";
+import { ArrowRight, Calculator, CircleCheck, Sparkles } from "lucide-react";
+import { HeroSteps } from "./hero-steps";
+import { WhatsappMockup } from "./whatsapp-mockup";
 
-const conversation = [
-  { from: "client", text: "Oi! Vocês atendem no sábado?" },
-  { from: "agent", text: "Olá! Atendemos de segunda a sábado. Quer que eu veja um horário para você?" },
-  { from: "client", text: "Quero, de manhã." },
-  { from: "agent", text: "Tenho quinta às 9h ou sábado às 10h. Qual prefere?" },
-] as const;
+// Fatos já assumidos no FAQ; nenhum número ou depoimento.
+const ASSURANCES = ["Diagnóstico gratuito", "Sem compromisso", "Atendimento em todo o Brasil"] as const;
 
 export function Hero() {
   return (
-    <section aria-labelledby="hero-titulo" className="grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-center">
-      <div className="flex flex-col gap-5">
-        <p className="text-sm font-semibold tracking-wide text-emerald-700 uppercase dark:text-emerald-400">
-          Automação, IA e marketing digital para PMEs
-        </p>
-        <h1 id="hero-titulo" className="text-3xl leading-tight font-semibold tracking-tight sm:text-4xl">
-          Responda cada cliente na hora e pare de perder vendas no WhatsApp.
-        </h1>
-        <p className="text-lg leading-relaxed">
-          A Elevio conecta atendimento com IA, CRM, site e anúncios num só processo, para sua empresa saber de onde
-          vêm os clientes e não deixar nenhum contato esfriar.
-        </p>
-        <div className="flex flex-col gap-3 sm:flex-row">
-          <a
-            href="#diagnostico"
-            className="rounded-lg bg-emerald-700 px-5 py-3 text-center text-base font-semibold text-white hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700"
-          >
-            Quero meu diagnóstico gratuito
-          </a>
-          <a
-            href="#simulador"
-            className="rounded-lg border-2 border-emerald-700 px-5 py-3 text-center text-base font-semibold text-emerald-800 hover:bg-emerald-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700 dark:text-emerald-300 dark:hover:bg-emerald-950"
-          >
-            Simular meu resultado
-          </a>
-        </div>
+    <section aria-labelledby="hero-titulo" className="relative isolate overflow-hidden pt-28 pb-20 sm:pt-36 lg:pb-28">
+      <div aria-hidden="true" className="absolute inset-0 -z-10">
+        <div className="absolute -top-48 -left-40 size-[38rem] animate-drift rounded-full bg-[radial-gradient(circle,rgb(79_107_245/0.32),transparent_65%)]" />
+        <div className="absolute top-10 -right-40 size-[34rem] animate-drift rounded-full bg-[radial-gradient(circle,rgb(124_58_237/0.3),transparent_65%)] [animation-delay:-6s]" />
+        <div className="absolute bottom-0 left-1/3 size-[30rem] animate-drift rounded-full bg-[radial-gradient(circle,rgb(34_211_238/0.16),transparent_65%)] [animation-delay:-12s]" />
+        <HeroSteps />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-b from-transparent to-background" />
       </div>
-      <figure className="mx-auto w-full max-w-sm">
-        <div className="overflow-hidden rounded-2xl border border-neutral-300 bg-[#efeae2] text-neutral-900 shadow-lg">
-          <div className="flex items-center gap-3 bg-emerald-800 px-4 py-3 text-white">
-            <WhatsappIcon className="size-6" />
-            <div>
-              <p className="text-sm font-semibold">Sua empresa</p>
-              <p className="text-xs opacity-80">Agente de IA · online</p>
-            </div>
+
+      <div className="container-page grid items-center gap-16 lg:grid-cols-[1.3fr_1fr] lg:gap-10">
+        <div className="flex flex-col gap-7">
+          <p className="glass inline-flex w-fit animate-fade-up items-center gap-2 rounded-2xl px-4 py-1.5 text-sm font-semibold text-foreground sm:rounded-full">
+            <Sparkles aria-hidden="true" className="size-4 text-brand-cyan" />
+            Elevando o seu negócio através da tecnologia.
+          </p>
+          <h1 id="hero-titulo" className="text-[2.35rem] leading-[1.08] font-extrabold sm:text-5xl xl:text-[3.4rem]">
+            Responda cada cliente na hora e <span className="text-gradient">pare de perder vendas</span> no WhatsApp.
+          </h1>
+          <p className="max-w-xl animate-fade-up text-lg leading-relaxed text-muted [animation-delay:120ms] sm:text-xl">
+            A Elevio conecta atendimento com IA, CRM, site e anúncios num só processo, para sua empresa saber de onde
+            vêm os clientes e não deixar nenhum contato esfriar.
+          </p>
+          <div className="flex animate-fade-up flex-col gap-3 [animation-delay:220ms] sm:flex-row">
+            <a href="#diagnostico" className="btn btn-primary btn-lg">
+              Quero meu diagnóstico gratuito
+              <ArrowRight aria-hidden="true" className="size-5" />
+            </a>
+            <a href="#simulador" className="btn btn-ghost">
+              <Calculator aria-hidden="true" className="size-5 text-brand-cyan" />
+              Simular meu resultado
+            </a>
           </div>
-          <ol className="flex flex-col gap-2 p-4 text-sm">
-            {conversation.map((message, index) => (
-              <li
-                key={index}
-                className={
-                  message.from === "client"
-                    ? "max-w-[85%] self-end rounded-lg rounded-tr-none bg-[#d9fdd3] px-3 py-2"
-                    : "max-w-[85%] self-start rounded-lg rounded-tl-none bg-white px-3 py-2"
-                }
-              >
-                <span className="sr-only">{message.from === "client" ? "Cliente: " : "Agente de IA: "}</span>
-                {message.text}
+          <ul className="flex animate-fade-up flex-wrap gap-x-6 gap-y-2 text-sm text-muted [animation-delay:320ms]">
+            {ASSURANCES.map((item) => (
+              <li key={item} className="flex items-center gap-2">
+                <CircleCheck aria-hidden="true" className="size-4 text-brand-cyan" />
+                {item}
               </li>
             ))}
-          </ol>
+          </ul>
         </div>
-        <figcaption className="mt-2 text-center text-xs opacity-70">
-          Exemplo ilustrativo de um agente de IA respondendo no WhatsApp.
-        </figcaption>
-      </figure>
+        <WhatsappMockup />
+      </div>
     </section>
   );
 }

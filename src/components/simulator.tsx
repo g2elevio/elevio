@@ -1,7 +1,9 @@
 "use client";
 
-import { useId, useState } from "react";
+import { ArrowRight, Info } from "lucide-react";
+import { useId, useState, type CSSProperties } from "react";
 import { AUTOMATION_UPLIFT, clamp, estimateSales, LEADS_RANGE, RATE_RANGE } from "@/features/simulator/estimate";
+import { SectionHeading } from "./section-heading";
 
 const upliftPercent = Math.round(AUTOMATION_UPLIFT * 100);
 
@@ -10,80 +12,118 @@ export function Simulator() {
   const [leads, setLeads] = useState<number>(LEADS_RANGE.initial);
   const [rate, setRate] = useState<number>(RATE_RANGE.initial);
   const result = estimateSales(leads, rate);
+  const fill = ((leads - LEADS_RANGE.min) / (LEADS_RANGE.max - LEADS_RANGE.min)) * 100;
+  const todayShare = result.withAutomation > 0 ? (result.withoutAutomation / result.withAutomation) * 100 : 0;
 
   return (
-    <section id="simulador" aria-labelledby="simulador-titulo" className="flex scroll-mt-6 flex-col gap-6">
-      <div className="flex max-w-2xl flex-col gap-2">
-        <h2 id="simulador-titulo" className="text-2xl font-semibold sm:text-3xl">Simule seu resultado</h2>
-        <p className="text-lg leading-relaxed">
-          Informe quantos contatos sua empresa recebe por mês e quantos deles viram venda hoje.
-        </p>
-      </div>
-      <div className="grid gap-6 rounded-xl border border-neutral-300 p-5 md:grid-cols-2 dark:border-neutral-700">
-        <div className="flex flex-col gap-6">
-          <div>
-            <label htmlFor={`${id}-leads`} className="flex justify-between font-medium">
-              <span>Leads por mês</span>
-              <output htmlFor={`${id}-leads`} className="font-semibold">{leads}</output>
-            </label>
-            <input
-              id={`${id}-leads`}
-              type="range"
-              min={LEADS_RANGE.min}
-              max={LEADS_RANGE.max}
-              step={LEADS_RANGE.step}
-              value={leads}
-              onChange={(event) => setLeads(Number(event.target.value))}
-              className="mt-3 w-full accent-emerald-700"
-            />
-          </div>
-          <div>
-            <label htmlFor={`${id}-rate`} className="font-medium">De cada 100 contatos, quantos compram hoje?</label>
-            <div className="mt-2 flex items-center gap-2">
+    <section id="simulador" aria-labelledby="simulador-titulo" className="container-page flex flex-col gap-12">
+      <SectionHeading
+        id="simulador-titulo"
+        eyebrow="Simulador"
+        title={
+          <>
+            Simule seu <span className="text-gradient">resultado</span>
+          </>
+        }
+      >
+        <p>Informe quantos contatos sua empresa recebe por mês e quantos deles viram venda hoje.</p>
+      </SectionHeading>
+
+      <div data-reveal="scale" className="ring-animated rounded-3xl bg-surface/90 shadow-[0_40px_100px_-40px_rgb(79_107_245/0.6)]">
+        <div className="grid gap-10 p-6 sm:p-10 md:grid-cols-2">
+          <div className="flex flex-col gap-10">
+            <div>
+              <label htmlFor={`${id}-leads`} className="flex items-baseline justify-between gap-4 font-semibold">
+                <span>Leads por mês</span>
+                <output htmlFor={`${id}-leads`} className="text-gradient text-4xl font-extrabold tabular-nums">
+                  {leads}
+                </output>
+              </label>
               <input
-                id={`${id}-rate`}
-                type="number"
-                inputMode="numeric"
-                min={RATE_RANGE.min}
-                max={RATE_RANGE.max}
-                value={rate}
-                onChange={(event) => setRate(Number(event.target.value))}
-                onBlur={() => setRate((value) => clamp(value, RATE_RANGE.min, RATE_RANGE.max))}
-                className="w-24 rounded-lg border border-neutral-400 bg-white px-3 py-2 text-base text-neutral-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700"
+                id={`${id}-leads`}
+                type="range"
+                min={LEADS_RANGE.min}
+                max={LEADS_RANGE.max}
+                step={LEADS_RANGE.step}
+                value={leads}
+                onChange={(event) => setLeads(Number(event.target.value))}
+                style={{ "--fill": `${fill}%` } as CSSProperties}
+                className="range mt-5 w-full"
               />
-              <span>%</span>
+              <div aria-hidden="true" className="mt-2 flex justify-between text-xs text-subtle tabular-nums">
+                <span>{LEADS_RANGE.min}</span>
+                <span>{LEADS_RANGE.max}</span>
+              </div>
+            </div>
+            <div>
+              <label htmlFor={`${id}-rate`} className="font-semibold">De cada 100 contatos, quantos compram hoje?</label>
+              <div className="mt-3 flex items-center gap-3">
+                <input
+                  id={`${id}-rate`}
+                  type="number"
+                  inputMode="numeric"
+                  min={RATE_RANGE.min}
+                  max={RATE_RANGE.max}
+                  value={rate}
+                  onChange={(event) => setRate(Number(event.target.value))}
+                  onBlur={() => setRate((value) => clamp(value, RATE_RANGE.min, RATE_RANGE.max))}
+                  className="w-28 rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-lg font-semibold tabular-nums transition-colors hover:border-brand-cyan/50"
+                />
+                <span className="text-lg text-muted">%</span>
+              </div>
             </div>
           </div>
-        </div>
-        <div aria-live="polite" className="flex flex-col gap-3">
-          <dl className="grid grid-cols-2 gap-3">
-            <div className="rounded-lg bg-neutral-100 p-4 text-neutral-900">
-              <dt className="text-sm">Vendas por mês hoje</dt>
-              <dd className="text-3xl font-semibold">{result.withoutAutomation}</dd>
+
+          <div aria-live="polite" className="flex flex-col gap-6">
+            <dl className="grid grid-cols-2 gap-4">
+              <div className="rounded-2xl border border-line bg-white/3 p-5">
+                <dt className="text-sm text-muted">Vendas por mês hoje</dt>
+                <dd className="mt-1 text-4xl font-extrabold tabular-nums">{result.withoutAutomation}</dd>
+              </div>
+              <div className="relative overflow-hidden rounded-2xl border border-brand-cyan/30 bg-linear-to-br from-brand-blue/25 to-brand-violet/20 p-5">
+                <dt className="text-sm text-foreground">Com automação (estimativa)</dt>
+                <dd className="text-gradient mt-1 text-4xl font-extrabold tabular-nums">{result.withAutomation}</dd>
+              </div>
+            </dl>
+            <div aria-hidden="true" className="flex flex-col gap-3">
+              <Bar label="Hoje" width={todayShare} className="bg-white/25" />
+              <Bar label="Com automação" width={100} className="bg-linear-to-r from-brand-cyan via-brand-blue to-brand-violet" />
             </div>
-            <div className="rounded-lg bg-emerald-50 p-4 text-emerald-900">
-              <dt className="text-sm">Com automação (estimativa)</dt>
-              <dd className="text-3xl font-semibold">{result.withAutomation}</dd>
-            </div>
-          </dl>
-          <p className="font-medium">
-            {result.extra > 0
-              ? `Cerca de ${result.extra} ${result.extra === 1 ? "venda a mais" : "vendas a mais"} por mês, com o mesmo volume de contatos.`
-              : "Com esse volume, a diferença ainda é pequena. O diagnóstico mostra onde estão os maiores ganhos."}
-          </p>
-          <a
-            href="#diagnostico"
-            className="rounded-lg bg-emerald-700 px-5 py-3 text-center text-base font-semibold text-white hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700"
-          >
-            Quero meu diagnóstico gratuito
-          </a>
+            <p className="text-lg font-semibold">
+              {result.extra > 0
+                ? `Cerca de ${result.extra} ${result.extra === 1 ? "venda a mais" : "vendas a mais"} por mês, com o mesmo volume de contatos.`
+                : "Com esse volume, a diferença ainda é pequena. O diagnóstico mostra onde estão os maiores ganhos."}
+            </p>
+            <a href="#diagnostico" className="btn btn-primary mt-auto">
+              Quero meu diagnóstico gratuito
+              <ArrowRight aria-hidden="true" className="size-5" />
+            </a>
+          </div>
         </div>
       </div>
-      <p className="text-sm leading-relaxed opacity-80">
-        Premissa: com resposta imediata e follow-up automático, consideramos um aumento de {upliftPercent}% na sua taxa
-        de conversão atual. É uma estimativa para ilustrar o potencial, não uma promessa de resultado. O ganho real
-        depende do seu negócio e é avaliado no diagnóstico.
+
+      <p className="flex gap-3 text-sm leading-relaxed text-muted">
+        <Info aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-cyan" />
+        <span>
+          Premissa: com resposta imediata e follow-up automático, consideramos um aumento de {upliftPercent}% na sua taxa
+          de conversão atual. É uma estimativa para ilustrar o potencial, não uma promessa de resultado. O ganho real
+          depende do seu negócio e é avaliado no diagnóstico.
+        </span>
       </p>
     </section>
+  );
+}
+
+function Bar({ label, width, className }: { label: string; width: number; className: string }) {
+  return (
+    <div className="flex items-center gap-3 text-xs text-subtle">
+      <span className="w-24 shrink-0 sm:w-28">{label}</span>
+      <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-white/5">
+        <div
+          className={`h-full rounded-full transition-[width] duration-500 ease-out-soft ${className}`}
+          style={{ width: `${width}%` }}
+        />
+      </div>
+    </div>
   );
 }

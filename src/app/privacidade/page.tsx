@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { site } from "@/lib/site";
 import { WHATSAPP_CONTACT_URL } from "@/lib/whatsapp";
@@ -15,13 +16,17 @@ const UPDATED_AT = "16 de outubro de 2026";
 
 export default function PrivacyPage() {
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-8 px-4 pt-12 pb-16 leading-relaxed">
-      <div className="flex flex-col gap-2">
-        <Link href="/" className="w-fit underline underline-offset-4">
+    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-8 px-4 pt-32 pb-20 leading-relaxed text-muted sm:px-6 [&_a]:text-brand-cyan">
+      <div className="flex flex-col gap-4">
+        <Link href="/" className="flex w-fit items-center gap-2 underline-offset-4 hover:underline">
+          <ArrowLeft aria-hidden="true" className="size-4" />
           Voltar para a página inicial
         </Link>
-        <h1 className="text-3xl font-semibold sm:text-4xl">Política de privacidade</h1>
-        <p className="text-neutral-700 dark:text-neutral-300">Última atualização: {UPDATED_AT}</p>
+        <p className="eyebrow">LGPD</p>
+        <h1 className="text-4xl font-extrabold text-foreground sm:text-5xl">
+          Política de <span className="text-gradient">privacidade</span>
+        </h1>
+        <p className="text-subtle">Última atualização: {UPDATED_AT}</p>
       </div>
 
       <Section title="Quem somos">
@@ -112,8 +117,8 @@ export default function PrivacyPage() {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="flex flex-col gap-3">
-      <h2 className="text-xl font-semibold sm:text-2xl">{title}</h2>
+    <section className="glass flex flex-col gap-3 rounded-2xl p-6">
+      <h2 className="text-xl font-bold text-foreground sm:text-2xl">{title}</h2>
       {children}
     </section>
   );
