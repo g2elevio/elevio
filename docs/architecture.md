@@ -25,9 +25,13 @@ src/
 │   ├── layout.tsx      # HTML pt-BR, fontes Geist, metadata base, rodapé e botão flutuante de WhatsApp
 │   ├── page.tsx        # landing page: hero, dores, serviços, #simulador, como funciona, sobre, FAQ, #diagnostico
 │   ├── privacidade/page.tsx # política de privacidade (LGPD)
+│   ├── opengraph-image.tsx # imagem de compartilhamento provisória (só texto)
+│   ├── sitemap.ts      # / e /privacidade
+│   ├── robots.ts       # libera tudo e aponta o sitemap
 │   └── globals.css     # Tailwind e tokens de cor
 ├── components/
 │   ├── about.tsx       # sobre: fundadores
+│   ├── business-json-ld.tsx # dados estruturados ProfessionalService (só fatos fornecidos)
 │   ├── faq.tsx         # perguntas frequentes em <details>/<summary>
 │   ├── how-it-works.tsx # quatro passos (lista ordenada)
 │   ├── site-footer.tsx # rodapé em todas as páginas (cidade, WhatsApp, política)
@@ -53,9 +57,9 @@ src/
 │   └── estimate.test.ts
 └── lib/
     ├── env-schema.ts   # schemas Zod de ambiente, erro sem vazar valores
-    ├── env.ts          # leitura de ambiente (server-only)
+    ├── env.ts          # leitura de ambiente (server-only), inclusive getSiteUrl()
     ├── logger.ts       # Pino com redação de segredos (server-only)
-    ├── site.ts         # dados públicos da Elevio (cidade, WhatsApp)
+    ├── site.ts         # dados públicos da Elevio (cidade, fundadores, WhatsApp)
     ├── whatsapp.ts     # links wa.me (contato geral e mensagem do lead)
     ├── utils.ts        # cn() para classes Tailwind
     └── *.test.ts       # testes de ambiente e redação de logs
@@ -80,6 +84,7 @@ Regras já aplicadas pelo lint: arquivos em `src/app` e `src/components` não im
 ## Dados e migrations
 
 - Schema em `src/db/schema/`. Tabela `leads`: `id` (uuid), `name`, `whatsapp` (normalizado como 55 + DDD + número), `segment`, `challenge`, `consent_text`, `consented_at`, `created_at`. RLS ligado sem políticas: no Supabase, a API pública (chave anon) não acessa a tabela; a aplicação conecta como dona e não é afetada. Tipos derivados com `$inferInsert`.
+- URLs absolutas (Open Graph, canonical, sitemap, robots, JSON-LD) saem de `getSiteUrl()`: `SITE_URL`, senão `VERCEL_PROJECT_PRODUCTION_URL` (definida pela Vercel no build), senão `http://localhost:3000`. As rotas continuam estáticas, então o valor fica fixo no build.
 - `getDb()` valida `DATABASE_URL` e só cria o pool (máx. 5 conexões, timeouts curtos) no primeiro uso. Build, lint e testes não precisam de banco.
 - `pnpm db:generate` gera SQL em `drizzle/` sem conectar. Revise o SQL e aplique com `pnpm db:migrate` só no destino autorizado; `DATABASE_URL_UNPOOLED` é usada para migrations quando o provedor exigir conexão direta.
 - Em Vercel Functions, revisar a orientação vigente de pooling (`attachDatabasePool`) ao escolher o provedor.

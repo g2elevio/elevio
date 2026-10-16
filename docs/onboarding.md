@@ -22,6 +22,7 @@ Variáveis de ambiente ficam em `.env.local` (ignorado pelo Git), a partir de `.
 | `DATABASE_URL` | Conexão PostgreSQL da aplicação | Para enviar o formulário |
 | `DATABASE_URL_UNPOOLED` | Conexão direta para migrations, se o provedor exigir | Não |
 | `LOG_LEVEL` | Nível do Pino (padrão `info`) | Não |
+| `SITE_URL` | Endereço público usado em Open Graph, sitemap e dados estruturados | Não: na Vercel usa o domínio de produção do projeto; localmente, `http://localhost:3000`. Defina ao ter domínio próprio |
 
 ## Banco
 

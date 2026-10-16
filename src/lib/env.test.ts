@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { getDatabaseUrl, getLogLevel } from "./env";
+import { getDatabaseUrl, getLogLevel, getSiteUrl } from "./env";
 
 vi.mock("server-only", () => ({}));
 afterEach(() => vi.unstubAllEnvs());
@@ -31,5 +31,17 @@ describe("server environment", () => {
     vi.stubEnv("LOG_LEVEL", "not-a-level");
     expect(() => getDatabaseUrl()).toThrow("DATABASE_URL");
     expect(() => getLogLevel()).toThrow("LOG_LEVEL");
+  });
+
+  it("resolves the public site URL from SITE_URL, then Vercel, then localhost", () => {
+    vi.stubEnv("SITE_URL", undefined);
+    vi.stubEnv("VERCEL_PROJECT_PRODUCTION_URL", undefined);
+    expect(getSiteUrl().href).toBe("http://localhost:3000/");
+    vi.stubEnv("VERCEL_PROJECT_PRODUCTION_URL", "elevio.vercel.app");
+    expect(getSiteUrl().href).toBe("https://elevio.vercel.app/");
+    vi.stubEnv("SITE_URL", "https://www.elevio.com.br");
+    expect(getSiteUrl().href).toBe("https://www.elevio.com.br/");
+    vi.stubEnv("SITE_URL", "ftp://elevio.com.br");
+    expect(() => getSiteUrl()).toThrow("SITE_URL");
   });
 });

@@ -1,9 +1,9 @@
 import { site } from "@/lib/site";
 
-const FOUNDERS = [
-  { name: "Gabriel Fávero Heller", initials: "GH" },
-  { name: "Gabriel Felipe Kuhn Schiestl", initials: "GS" },
-] as const;
+function initials(name: string) {
+  const parts = name.split(" ");
+  return `${parts[0]?.charAt(0) ?? ""}${parts.at(-1)?.charAt(0) ?? ""}`;
+}
 
 export function About() {
   return (
@@ -17,19 +17,19 @@ export function About() {
         </p>
       </div>
       <ul className="grid gap-4 sm:grid-cols-2">
-        {FOUNDERS.map((founder) => (
+        {site.founders.map((name) => (
           <li
-            key={founder.name}
+            key={name}
             className="flex items-center gap-4 rounded-xl border border-neutral-300 p-5 dark:border-neutral-700"
           >
             <span
               aria-hidden="true"
               className="flex size-12 shrink-0 items-center justify-center rounded-full bg-emerald-700 font-semibold text-white"
             >
-              {founder.initials}
+              {initials(name)}
             </span>
             <div>
-              <h3 className="text-lg font-semibold">{founder.name}</h3>
+              <h3 className="text-lg font-semibold">{name}</h3>
               <p>Engenheiro de Software e fundador</p>
             </div>
           </li>

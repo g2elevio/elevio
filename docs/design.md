@@ -20,6 +20,7 @@
 - `src/components/about.tsx`: fundadores em cartões com iniciais (sem foto até haver uma autorizada).
 - `src/components/faq.tsx`: acordeão nativo `<details>/<summary>`, sem JavaScript, operável por teclado; ícone `+` gira com `group-open` e respeita `motion-reduce`. Respostas sem preço, prazo ou condição fixa.
 - `src/components/site-footer.tsx`: nome, cidade, WhatsApp e link para `/privacidade`. CNPJ e e-mail entram quando forem fornecidos.
+- `src/app/opengraph-image.tsx`: imagem de compartilhamento 1200×630 só com nome e promessa do hero, fundo `emerald-700`. Trocar pela arte da marca quando existir.
 - `src/app/privacidade/page.tsx`: política de privacidade em seções `h2`, com link de volta para a página inicial.
 - `src/components/lead-form.tsx`: formulário de diagnóstico. Campos com rótulo visível, erros por campo ligados via `aria-describedby`, `aria-invalid` nos campos com erro, mensagem geral com `role="alert"`, botão desabilitado durante o envio e checkbox de consentimento desmarcado, com link para a política de privacidade (abre em nova aba para não perder o preenchimento). Cores provisórias (verde `emerald-700`) até a identidade visual.
 
