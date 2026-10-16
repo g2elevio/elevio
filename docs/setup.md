@@ -81,5 +81,5 @@ Recursos temporários: o cluster PostgreSQL local e o servidor da porta 3458 for
 
 - Decisões externas do produto: ver a tabela de pendências em [PRODUCT.md](../PRODUCT.md#hipóteses-e-pendências) (CNPJ, e-mail, revisão jurídica da política de privacidade, IDs de analytics, identidade visual).
 - Ferramentas do cliente: conferir Ponytail, Caveman, Superpowers, RTK, Graphify e Context7 na máquina de uso e atualizar a tabela de componentes.
-- Próxima entrega: analytics (aguarda IDs), SEO básico e publicação na Vercel (ver [PRODUCT.md](../PRODUCT.md#próxima-entrega)).
+- Próxima entrega: analytics (aguarda IDs) e publicação na Vercel (ver [PRODUCT.md](../PRODUCT.md#próxima-entrega)).
 - Code review sugerido para a captura de leads: 4 ciclos, por envolver dados pessoais e LGPD. Focos: (1) validação e segurança da Server Action, (2) LGPD e logs, (3) acessibilidade do formulário, (4) integração e checks. Prompt: "Faça 4 ciclos de code review da captura de leads: validação/segurança da Server Action, LGPD e ausência de dados pessoais em logs, acessibilidade do formulário e integração final. Rode `pnpm check` a cada correção."

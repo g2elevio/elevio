@@ -6,6 +6,7 @@ import { WHATSAPP_CONTACT_URL } from "@/lib/whatsapp";
 export const metadata: Metadata = {
   title: "Política de privacidade | Elevio",
   description: "Como a Elevio coleta, usa e protege os dados enviados pelo site.",
+  alternates: { canonical: "/privacidade" },
 };
 
 // Texto-base escrito a partir do que o site faz hoje. Revisar com apoio jurídico (pendência em PRODUCT.md)
