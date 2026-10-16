@@ -15,6 +15,7 @@
 - Helper `cn` em `src/lib/utils.ts` para compor classes Tailwind.
 - `src/components/hero.tsx`: título, subtítulo, CTA para `#diagnostico` e mockup de conversa no WhatsApp feito em HTML/CSS (sem imagem, para não pesar no LCP), com legenda de exemplo ilustrativo e falas identificadas para leitores de tela.
 - Seções de conteúdo (`pain-points.tsx`, `services.tsx`, `how-it-works.tsx`): cartões com borda neutra, título `h3` e texto; uma coluna no celular, duas ou mais a partir de `sm`. O texto de cada seção fica no próprio componente, sem números ou depoimentos.
+- `src/components/simulator.tsx`: slider de leads por mês (10 a 500) com valor visível em `<output>`, campo da taxa atual (1 a 50%), resultados em `aria-live` e a premissa de +20% sempre visível com o aviso de estimativa.
 - `src/components/whatsapp-button.tsx`: botão fixo de 56 px no canto inferior direito, verde `emerald-700` com ícone branco e `aria-label`. A página tem respiro inferior (`pb-28`) para o botão não cobrir o envio do formulário.
 - `src/components/lead-form.tsx`: formulário de diagnóstico. Campos com rótulo visível, erros por campo ligados via `aria-describedby`, `aria-invalid` nos campos com erro, mensagem geral com `role="alert"`, botão desabilitado durante o envio e checkbox de consentimento desmarcado. Cores provisórias (verde `emerald-700`) até a identidade visual.
 

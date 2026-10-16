@@ -28,6 +28,12 @@ export function Hero() {
           >
             Quero meu diagnóstico gratuito
           </a>
+          <a
+            href="#simulador"
+            className="rounded-lg border-2 border-emerald-700 px-5 py-3 text-center text-base font-semibold text-emerald-800 hover:bg-emerald-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700 dark:text-emerald-300 dark:hover:bg-emerald-950"
+          >
+            Simular meu resultado
+          </a>
         </div>
       </div>
       <figure className="mx-auto w-full max-w-sm">

@@ -62,6 +62,7 @@ Blog, ferramentas gratuitas (raio-X do site, análise de persuasão), chat de IA
 - Persistência de leads com Drizzle ORM + PostgreSQL (driver `pg`, runtime Node.js), padrão do toolkit. Provedor escolhido: Supabase (plano gratuito). A tabela `leads` tem RLS ligado e sem políticas, para a API pública do Supabase não expor os leads.
 - Formulário simples com recursos nativos + Server Action e validação Zod; sem biblioteca de formulários enquanto não houver necessidade.
 - Página majoritariamente estática (Server Components); componentes de cliente só no simulador, no formulário, no acordeão e nos eventos de analytics.
+- Simulador: a taxa de conversão atual vem do visitante (padrão 10%) e a Elevio assume +20% relativo com automação, premissa aprovada em 16/10/2026 e exibida na tela. Trocar por dados de clientes reais quando existirem.
 - Hospedagem preferida: Vercel (plano gratuito), por integração nativa com Next.js e pelas skills instaladas. Confirmar se o uso comercial cabe no plano gratuito antes de publicar.
 
 ## Hipóteses e pendências
@@ -83,7 +84,6 @@ Meta sugerida antes de publicar: conversão de visita para formulário acima de 
 | `DATABASE_URL` (Transaction pooler) configurada no host | Gravação de leads em produção | Configurar ao publicar na Vercel; o banco Supabase já tem a tabela `leads` |
 | CNPJ, e-mail e endereço de contato | Rodapé e dados estruturados LocalBusiness | Fornecer os dados reais |
 | Fundadores: nomes, foto e trajetória | Seção Sobre | Fornecer texto e foto autorizados |
-| Premissas do simulador (taxa de conversão sem e com automação, ticket opcional) | Credibilidade do simulador | Aprovar valores conservadores e a fonte de cada um |
 | Texto da política de privacidade | Exigência LGPD | Redigir e, de preferência, revisar com apoio jurídico |
 | IDs do GA4 e do Meta Pixel; banner de consentimento de cookies | Analytics e conformidade LGPD | Criar as propriedades e decidir o modelo de consentimento |
 | Identidade visual (logo, cores, tipografia) e domínio | Design e SEO | Fornecer a marca ou aprovar uma direção inicial |
@@ -104,9 +104,9 @@ Checks técnicos do setup (lint, tipos, testes, build) ficam em [docs/quality.md
 
 ## Próxima entrega
 
-Já implementado: hero, dores, serviços, como funciona, formulário de diagnóstico gravando no Supabase e botão flutuante de WhatsApp.
+Já implementado: hero com os dois CTAs, dores, serviços, simulador, como funciona, formulário de diagnóstico gravando no Supabase e botão flutuante de WhatsApp.
 
-O que falta do MVP depende de informações da Elevio (ver pendências): simulador (premissas), Sobre (fundadores), FAQ (respostas oficiais), rodapé (CNPJ e contato) e política de privacidade. Próxima tarefa: **simulador**, assim que as premissas forem aprovadas. Critério: slider de leads por mês recalcula em tempo real as vendas estimadas com e sem automação, mostra as premissas e o aviso de estimativa, e o CTA "Simular meu resultado" entra no hero.
+O que falta do MVP depende de informações da Elevio (ver pendências): Sobre (fundadores), FAQ (respostas oficiais), rodapé (CNPJ e contato), política de privacidade e IDs de analytics. Em paralelo, dá para publicar uma prévia na Vercel com a `DATABASE_URL` do Supabase.
 
 ## Manutenção
 
