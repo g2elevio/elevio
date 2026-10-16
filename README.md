@@ -26,4 +26,4 @@ A página e os checks rodam sem banco. Para enviar o formulário de diagnóstico
 
 ## Próxima entrega
 
-Simulador de resultado, depois que as premissas forem aprovadas. Detalhes em [PRODUCT.md](PRODUCT.md#próxima-entrega).
+Sobre, FAQ e rodapé (aguardam dados da Elevio) e publicação na Vercel. Detalhes em [PRODUCT.md](PRODUCT.md#próxima-entrega).

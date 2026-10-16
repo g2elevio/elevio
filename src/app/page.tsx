@@ -3,6 +3,7 @@ import { HowItWorks } from "@/components/how-it-works";
 import { LeadForm } from "@/components/lead-form";
 import { PainPoints } from "@/components/pain-points";
 import { Services } from "@/components/services";
+import { Simulator } from "@/components/simulator";
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <Hero />
       <PainPoints />
       <Services />
+      <Simulator />
       <HowItWorks />
       <section
         id="diagnostico"
