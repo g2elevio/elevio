@@ -80,7 +80,7 @@ Meta sugerida antes de publicar: conversão de visita para formulário acima de 
 
 | Pendência | Impacto | Próximo passo |
 |---|---|---|
-| Projeto Supabase criado e `DATABASE_URL` configurada no host | Gravação de leads em produção | Criar o projeto, aplicar a migration e configurar as variáveis (ver `docs/onboarding.md`) |
+| `DATABASE_URL` (Transaction pooler) configurada no host | Gravação de leads em produção | Configurar ao publicar na Vercel; o banco Supabase já tem a tabela `leads` |
 | CNPJ, e-mail e endereço de contato | Rodapé e dados estruturados LocalBusiness | Fornecer os dados reais |
 | Fundadores: nomes, foto e trajetória | Seção Sobre | Fornecer texto e foto autorizados |
 | Premissas do simulador (taxa de conversão sem e com automação, ticket opcional) | Credibilidade do simulador | Aprovar valores conservadores e a fonte de cada um |
@@ -104,9 +104,9 @@ Checks técnicos do setup (lint, tipos, testes, build) ficam em [docs/quality.md
 
 ## Próxima entrega
 
-A captura de leads está implementada (formulário, validação, gravação com consentimento e redirecionamento ao WhatsApp (45) 99996-8287). Falta só ligá-la ao Supabase de produção.
+Já implementado: captura de leads gravando no Supabase, hero com o CTA de diagnóstico e mockup do agente de IA, e botão flutuante de WhatsApp. O CTA "Simular meu resultado" entra junto com o simulador, para não apontar para uma seção vazia.
 
-Próxima tarefa: **hero e botão flutuante de WhatsApp**. Hero com a promessa, os dois CTAs (formulário e simulador) e o botão fixo de WhatsApp visível em todas as seções no mobile. Critério: os CTAs levam às âncoras corretas e o botão abre `wa.me/5545999968287` a partir de 360 px sem cobrir o envio do formulário. O mockup do agente de IA e o texto final da promessa dependem da identidade visual.
+Próxima tarefa: **seções de conteúdo sem dados pendentes**: diagnóstico de dores, os seis serviços e como funciona (quatro passos). Critério: textos sem números ou depoimentos, leitura confortável a 360 px e ordem igual à do MVP. O simulador vem depois que as premissas forem aprovadas.
 
 ## Manutenção
 

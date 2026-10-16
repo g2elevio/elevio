@@ -22,11 +22,14 @@ Versões exatas ficam no `pnpm-lock.yaml`.
 ```text
 src/
 ├── app/
-│   ├── layout.tsx      # HTML pt-BR, fontes Geist, metadata base
-│   ├── page.tsx        # landing page (hoje: apresentação curta + seção #diagnostico)
+│   ├── layout.tsx      # HTML pt-BR, fontes Geist, metadata base, botão flutuante de WhatsApp
+│   ├── page.tsx        # landing page: hero + seção #diagnostico
 │   └── globals.css     # Tailwind e tokens de cor
 ├── components/
-│   └── lead-form.tsx   # formulário de diagnóstico (client, useActionState)
+│   ├── hero.tsx        # hero com CTA e mockup do agente de IA no WhatsApp (HTML/CSS, sem imagem)
+│   ├── lead-form.tsx   # formulário de diagnóstico (client, useActionState)
+│   ├── whatsapp-button.tsx # botão fixo de WhatsApp, em todas as páginas
+│   └── whatsapp-icon.tsx
 ├── db/
 │   ├── index.ts        # getDb(): pool pg lazy, limitado, reaproveitado no HMR
 │   ├── index.test.ts   # ciclo de vida do pool, sem conexão real
@@ -34,7 +37,6 @@ src/
 ├── features/leads/
 │   ├── options.ts      # segmentos, dificuldades e texto de consentimento
 │   ├── validation.ts   # schema Zod, telefone brasileiro, tipos do estado do formulário
-│   ├── whatsapp.ts     # links wa.me com mensagem pré-preenchida
 │   ├── repository.ts   # saveLead() (server-only, único ponto que grava leads)
 │   ├── actions.ts      # Server Action submitLead
 │   └── *.test.ts       # validação e Server Action (repositório mockado)
@@ -43,6 +45,7 @@ src/
     ├── env.ts          # leitura de ambiente (server-only)
     ├── logger.ts       # Pino com redação de segredos (server-only)
     ├── site.ts         # dados públicos da Elevio (WhatsApp)
+    ├── whatsapp.ts     # links wa.me (contato geral e mensagem do lead)
     ├── utils.ts        # cn() para classes Tailwind
     └── *.test.ts       # testes de ambiente e redação de logs
 drizzle/                # SQL versionado (0000_create_leads.sql)
@@ -56,7 +59,7 @@ vitest.config.mts
 
 Captura de leads (implementada):
 
-1. A página é estática (Server Component). O único componente de cliente é `LeadForm`; simulador, acordeão do FAQ e analytics também serão ilhas de cliente.
+1. A página é estática (Server Components: hero, botão de WhatsApp). O único componente de cliente é `LeadForm`; simulador, acordeão do FAQ e analytics também serão ilhas de cliente.
 2. `LeadForm` envia para `submitLead` via `useActionState`. A action descarta envios com o campo honeypot preenchido, valida com `leadSchema` e grava com `saveLead`, junto do texto de consentimento e do horário.
 3. Em erro de validação, devolve mensagens por campo e os valores digitados (o React reinicia o formulário após a action; os valores voltam por `defaultValue`). Em falha de banco, registra só o código do erro e pede nova tentativa.
 4. Em sucesso, o cliente navega para `wa.me/5545999968287` com nome e segmento na mensagem. O evento de conversão entra com a configuração de analytics.

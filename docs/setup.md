@@ -72,7 +72,7 @@ Recursos temporários: o servidor de validação na porta 3457 foi encerrado. Ne
 |---|---|---|
 | Migration `0000_create_leads.sql` | Validado em PostgreSQL 16 local | `pnpm db:migrate` aplicado; `\d leads` mostra as 8 colunas e "row security enabled" |
 | Fluxo do formulário | Validado em PostgreSQL 16 local | Playwright a 360 px: envio inválido mostra 4 erros por campo e mantém nome/telefone digitados; envio válido grava 1 linha com telefone `5545999968287`, consentimento e horário, e navega para `wa.me/5545999968287?text=Olá! Sou Maria Teste, do segmento Odontologia...` |
-| Supabase | Pendente | Projeto ainda não criado; migration não aplicada em produção |
+| Supabase | Validado | Workflow "Migrar banco" concluído com sucesso em 16/10/2026 (GitHub Actions); conexão da aplicação em produção ainda pendente até a publicação |
 | Evento de conversão no analytics | Pendente | Depende dos IDs de GA4 e Meta Pixel |
 
 Recursos temporários: o cluster PostgreSQL local e o servidor da porta 3458 foram encerrados.
@@ -81,5 +81,5 @@ Recursos temporários: o cluster PostgreSQL local e o servidor da porta 3458 for
 
 - Decisões externas do produto: ver a tabela de pendências em [PRODUCT.md](../PRODUCT.md#hipóteses-e-pendências) (WhatsApp, banco, CNPJ, fundadores, premissas do simulador, política de privacidade, IDs de analytics, identidade visual, FAQ).
 - Ferramentas do cliente: conferir Ponytail, Caveman, Superpowers, RTK, Graphify e Context7 na máquina de uso e atualizar a tabela de componentes.
-- Próxima entrega: hero e botão flutuante de WhatsApp (ver [PRODUCT.md](../PRODUCT.md#próxima-entrega)).
+- Próxima entrega: seções de dores, serviços e como funciona (ver [PRODUCT.md](../PRODUCT.md#próxima-entrega)).
 - Code review sugerido para a captura de leads: 4 ciclos, por envolver dados pessoais e LGPD. Focos: (1) validação e segurança da Server Action, (2) LGPD e logs, (3) acessibilidade do formulário, (4) integração e checks. Prompt: "Faça 4 ciclos de code review da captura de leads: validação/segurança da Server Action, LGPD e ausência de dados pessoais em logs, acessibilidade do formulário e integração final. Rode `pnpm check` a cada correção."

@@ -13,6 +13,8 @@
 - Tokens de cor em `src/app/globals.css` (`--background`, `--foreground`, com variante escura por `prefers-color-scheme`). São os valores padrão do scaffold e serão substituídos pela identidade da Elevio.
 - Fontes: Geist e Geist Mono via `next/font` em `src/app/layout.tsx`.
 - Helper `cn` em `src/lib/utils.ts` para compor classes Tailwind.
+- `src/components/hero.tsx`: título, subtítulo, CTA para `#diagnostico` e mockup de conversa no WhatsApp feito em HTML/CSS (sem imagem, para não pesar no LCP), com legenda de exemplo ilustrativo e falas identificadas para leitores de tela.
+- `src/components/whatsapp-button.tsx`: botão fixo de 56 px no canto inferior direito, verde `emerald-700` com ícone branco e `aria-label`. A página tem respiro inferior (`pb-28`) para o botão não cobrir o envio do formulário.
 - `src/components/lead-form.tsx`: formulário de diagnóstico. Campos com rótulo visível, erros por campo ligados via `aria-describedby`, `aria-invalid` nos campos com erro, mensagem geral com `role="alert"`, botão desabilitado durante o envio e checkbox de consentimento desmarcado. Cores provisórias (verde `emerald-700`) até a identidade visual.
 
 ## Interação
@@ -31,7 +33,7 @@ Requisitos específicos do MVP:
 - Breakpoints Tailwind padrão; nenhuma rolagem horizontal a partir de 360 px.
 - Estados a cobrir: envio em andamento, erro de validação por campo, erro de servidor e sucesso (antes do redirecionamento ao WhatsApp).
 - Revisão de UI: rodar a skill `web-design-guidelines` e o Lighthouse mobile (meta 90+ em Performance) antes de concluir cada seção.
-- Formulário verificado a 360 px de largura sem rolagem horizontal (Playwright). Ainda sem auditoria Lighthouse nem revisão `web-design-guidelines`.
+- Verificado com Playwright a 360 px e 1280 px: sem rolagem horizontal, CTA do hero rola até o formulário, botão de WhatsApp visível no topo e no fim da página sem sobrepor o botão de envio. Ainda sem auditoria Lighthouse nem revisão `web-design-guidelines`.
 
 ## Manutenção
 
