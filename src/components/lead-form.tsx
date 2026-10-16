@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState, useEffect, useId } from "react";
 import { submitLead } from "@/features/leads/actions";
 import { CHALLENGES, CONSENT_TEXT, SEGMENTS } from "@/features/leads/options";
@@ -86,6 +87,11 @@ export function LeadForm() {
           <input {...field("consent")} type="checkbox" required className="mt-1 size-5 shrink-0 accent-emerald-700" />
           <label htmlFor={`${id}-consent`} className="text-sm leading-relaxed">{CONSENT_TEXT}</label>
         </div>
+        <p className="mt-1 pl-8 text-sm">
+          <Link href="/privacidade" target="_blank" className="underline underline-offset-4">
+            Leia a política de privacidade
+          </Link>
+        </p>
         {error("consent")}
       </div>
       {state.status === "error" ? (
