@@ -39,4 +39,6 @@ Cada ciclo verifica o estado atual e o código conectado, registra achados com s
 
 Rode `pnpm audit --prod` (dependências de produção) e `pnpm audit` (todas). O estado atual está em [setup.md](setup.md). Lint e build aprovados não significam auditoria zerada.
 
+O workflow `Migrar banco` (`.github/workflows/db-migrate.yml`) só roda manualmente e só aplica migrations; não é um check de CI.
+
 Checks são comandos explícitos. Hooks Git, bloqueios de push e exigências de branch não fazem parte do padrão.

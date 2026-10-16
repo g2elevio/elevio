@@ -39,7 +39,11 @@ Depois de mudar o schema em `src/db/schema/`, rode `pnpm db:generate`, revise o 
    - **Transaction pooler** (porta 6543) para `DATABASE_URL`: é a indicada para funções serverless, como na Vercel.
    - **Session pooler** (porta 5432) para `DATABASE_URL_UNPOOLED`: usada pelo `pnpm db:migrate`. A conexão direta (`db.<projeto>.supabase.co`) só aceita IPv6 no plano gratuito.
 2. Acrescente `?uselibpqcompat=true&sslmode=require` às duas URLs. Com só `sslmode=require`, o driver `pg` atual exige verificação completa do certificado e falha contra a CA do Supabase. Para verificação completa, baixe o certificado do painel e use `sslmode=verify-full&sslrootcert=...`.
-3. Aplique a migration no projeto: `DATABASE_URL_UNPOOLED=... pnpm db:migrate` (ou com as URLs em `.env.local`). Confira, no Table Editor, que `leads` aparece com RLS ligado.
+3. Aplique a migration no projeto, de um destes jeitos:
+   - **Pelo GitHub (sem rodar nada localmente):** em Settings → Secrets and variables → Actions do repositório, crie o secret `DATABASE_URL_UNPOOLED` com a URL do Session pooler (senha preenchida e o sufixo do passo 2). Depois, em Actions → **Migrar banco** → Run workflow.
+   - **Localmente:** `DATABASE_URL_UNPOOLED=... pnpm db:migrate` (ou com as URLs em `.env.local`).
+
+   Confira, no Table Editor, que `leads` aparece com RLS ligado. Rode o mesmo passo a cada nova migration.
 4. Configure `DATABASE_URL` nas variáveis de ambiente do host. Nunca exponha as URLs em `NEXT_PUBLIC_*`.
 5. Os leads ficam no Table Editor do Supabase (tabela `leads`, ordene por `created_at`).
 
