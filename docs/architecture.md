@@ -55,6 +55,7 @@ src/
 ├── db/
 │   ├── index.ts        # getDb(): pool pg lazy, limitado, reaproveitado no HMR
 │   ├── index.test.ts   # ciclo de vida do pool, sem conexão real
+│   ├── keepalive.ts    # pingDatabase(): leitura diária que evita a pausa do Supabase Free
 │   └── schema/index.ts # tabela leads (RLS ligado)
 ├── features/leads/
 │   ├── options.ts      # segmentos, dificuldades e texto de consentimento
@@ -95,9 +96,11 @@ Regras já aplicadas pelo lint: arquivos em `src/app` e `src/components` não im
 
 - Schema em `src/db/schema/`. Tabela `leads`: `id` (uuid), `name`, `whatsapp` (normalizado como 55 + DDD + número), `segment`, `challenge`, `consent_text`, `consented_at`, `created_at`. RLS ligado sem políticas: no Supabase, a API pública (chave anon) não acessa a tabela; a aplicação conecta como dona e não é afetada. Tipos derivados com `$inferInsert`.
 - URLs absolutas (Open Graph, canonical, sitemap, robots, JSON-LD) saem de `getSiteUrl()`: `SITE_URL`, senão `VERCEL_PROJECT_PRODUCTION_URL` (definida pela Vercel no build), senão `http://localhost:3000`. As rotas continuam estáticas, então o valor fica fixo no build.
-- `getDb()` valida `DATABASE_URL` e só cria o pool (máx. 5 conexões, timeouts curtos) no primeiro uso. Build, lint e testes não precisam de banco.
+- `getDb()` valida `DATABASE_URL` e só cria o pool (máx. 2 conexões por instância serverless, timeouts curtos) no primeiro uso. Build, lint e testes não precisam de banco.
 - `pnpm db:generate` gera SQL em `drizzle/` sem conectar. Revise o SQL e aplique com `pnpm db:migrate` só no destino autorizado; `DATABASE_URL_UNPOOLED` é usada para migrations quando o provedor exigir conexão direta.
-- Em Vercel Functions, revisar a orientação vigente de pooling (`attachDatabasePool`) ao escolher o provedor.
+- Na Netlify, a Server Action roda numa Netlify Function; use o Transaction pooler do Supabase em `DATABASE_URL`.
+- Keep-alive: `netlify/functions/supabase-keepalive.mts`, agendada em `netlify.toml` (`@daily`, UTC), chama `pingDatabase()` (`src/db/keepalive.ts`) com `select 1 from leads limit 1`, sem devolver dados pessoais. Só roda no deploy de produção publicado; para testar, use **Run now** em Functions no painel da Netlify. O módulo usa imports relativos e não importa `server-only`, porque roda fora do Next.
+- Banda: todas as rotas são estáticas e servidas pelo CDN. Os `<Link>` usam `prefetch={false}`, porque o prefetch baixava o payload RSC de `/` e `/privacidade` em toda visita (cerca de 23 KB, 9% da visita) para links pouco clicados.
 
 ## Decisões
 
@@ -108,7 +111,7 @@ Regras já aplicadas pelo lint: arquivos em `src/app` e `src/components` não im
 | Segmento e dificuldade como listas fechadas | Mais rápido no celular e dados comparáveis para qualificar leads | Texto livre | Se muitos leads escolherem "Outro"/"Outra" |
 | Honeypot em vez de captcha | Sem custo de conversão nem script de terceiros | Turnstile/reCAPTCHA | Se aparecer spam real |
 | Página estática com ilhas de cliente | Meta de LCP < 2,5 s em 4G | Página inteira como Client Component | Não previsto |
-| Vercel como host preferido | Integração nativa com Next, plano gratuito | Netlify, Cloudflare Pages | Ao confirmar termos de uso comercial do plano gratuito |
+| Netlify Free como host (20/10/2026) | Plano gratuito com uso comercial permitido, Next.js 16 pelo adaptador OpenNext e domínio próprio | Vercel Pro (Hobby proíbe uso comercial); Cloudflare Workers + OpenNext | Se os 300 créditos mensais não bastarem |
 
 Fonte dos defaults: Vibe Coding Toolkit, revisão registrada em [setup.md](setup.md).
 

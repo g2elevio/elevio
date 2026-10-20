@@ -22,7 +22,7 @@ Variáveis de ambiente ficam em `.env.local` (ignorado pelo Git), a partir de `.
 | `DATABASE_URL` | Conexão PostgreSQL da aplicação | Para enviar o formulário |
 | `DATABASE_URL_UNPOOLED` | Conexão direta para migrations, se o provedor exigir | Não |
 | `LOG_LEVEL` | Nível do Pino (padrão `info`) | Não |
-| `SITE_URL` | Endereço público usado em Open Graph, sitemap e dados estruturados | Não: na Vercel usa o domínio de produção do projeto; localmente, `http://localhost:3000`. Defina ao ter domínio próprio |
+| `SITE_URL` | Endereço público usado em Open Graph, sitemap e dados estruturados | Sim na Netlify (o fallback automático só existe na Vercel); localmente, `http://localhost:3000`. Use o domínio próprio |
 
 ## Banco
 
@@ -37,7 +37,7 @@ Depois de mudar o schema em `src/db/schema/`, rode `pnpm db:generate`, revise o 
 ### Supabase (produção)
 
 1. Crie um projeto no plano gratuito. Em **Connect**, copie duas strings de conexão do pooler (Supavisor):
-   - **Transaction pooler** (porta 6543) para `DATABASE_URL`: é a indicada para funções serverless, como na Vercel.
+   - **Transaction pooler** (porta 6543) para `DATABASE_URL`: é a indicada para funções serverless, como as da Netlify.
    - **Session pooler** (porta 5432) para `DATABASE_URL_UNPOOLED`: usada pelo `pnpm db:migrate`. A conexão direta (`db.<projeto>.supabase.co`) só aceita IPv6 no plano gratuito.
 2. Acrescente `?uselibpqcompat=true&sslmode=require` às duas URLs. Com só `sslmode=require`, o driver `pg` atual exige verificação completa do certificado e falha contra a CA do Supabase. Para verificação completa, baixe o certificado do painel e use `sslmode=verify-full&sslrootcert=...`.
 3. Aplique a migration no projeto, de um destes jeitos:

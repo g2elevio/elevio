@@ -27,10 +27,10 @@ export function SiteFooter() {
         </div>
         <nav aria-label="Seções" className="flex flex-col gap-2.5">
           <p className="mb-1 text-sm font-bold text-foreground">Navegação</p>
-          <Link href="/#servicos" className={linkClass}>Soluções</Link>
-          <Link href="/#simulador" className={linkClass}>Simulador</Link>
-          <Link href="/#como-funciona" className={linkClass}>Processo</Link>
-          <Link href="/#faq" className={linkClass}>Dúvidas</Link>
+          <Link href="/#servicos" prefetch={false} className={linkClass}>Soluções</Link>
+          <Link href="/#simulador" prefetch={false} className={linkClass}>Simulador</Link>
+          <Link href="/#como-funciona" prefetch={false} className={linkClass}>Processo</Link>
+          <Link href="/#faq" prefetch={false} className={linkClass}>Dúvidas</Link>
         </nav>
         <nav aria-label="Contato e privacidade" className="flex flex-col gap-2.5">
           <p className="mb-1 text-sm font-bold text-foreground">Contato</p>
@@ -38,7 +38,7 @@ export function SiteFooter() {
             <WhatsappIcon className="size-4 text-emerald-400" />
             WhatsApp: {site.whatsappDisplay}
           </a>
-          <Link href="/privacidade" className={linkClass}>
+          <Link href="/privacidade" prefetch={false} className={linkClass}>
             Política de privacidade
           </Link>
         </nav>

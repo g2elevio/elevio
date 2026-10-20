@@ -18,7 +18,7 @@ export default function PrivacyPage() {
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-8 px-4 pt-32 pb-20 leading-relaxed text-muted sm:px-6 [&_a]:text-brand-cyan">
       <div className="flex flex-col gap-4">
-        <Link href="/" className="flex w-fit items-center gap-2 underline-offset-4 hover:underline">
+        <Link href="/" prefetch={false} className="flex w-fit items-center gap-2 underline-offset-4 hover:underline">
           <ArrowLeft aria-hidden="true" className="size-4" />
           Voltar para a página inicial
         </Link>

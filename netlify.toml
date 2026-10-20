@@ -1,0 +1,5 @@
+# Next.js é detectado pela Netlify (adaptador OpenNext); aqui fica só o que a detecção não cobre.
+
+# Ping diário no Supabase para o plano Free não pausar o projeto (docs/setup.md).
+[functions."supabase-keepalive"]
+  schedule = "@daily"

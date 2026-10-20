@@ -64,7 +64,8 @@ Blog, ferramentas gratuitas (raio-X do site, análise de persuasão), chat de IA
 - Página majoritariamente estática (Server Components); componentes de cliente só no simulador, no formulário, no acordeão e nos eventos de analytics.
 - Sobre: fundadores Gabriel Fávero Heller e Gabriel Felipe Kuhn Schiestl, engenheiros de software; sede em Marechal Cândido Rondon (PR). Fornecido em 16/10/2026.
 - Simulador: a taxa de conversão atual vem do visitante (padrão 10%) e a Elevio assume +20% relativo com automação, premissa aprovada em 16/10/2026 e exibida na tela. Trocar por dados de clientes reais quando existirem.
-- Hospedagem preferida: Vercel (plano gratuito), por integração nativa com Next.js e pelas skills instaladas. Confirmar se o uso comercial cabe no plano gratuito antes de publicar.
+- Hospedagem: Netlify (plano Free), decidida em 20/10/2026. O plano Hobby da Vercel proíbe uso comercial; o Free da Netlify permite, suporta Next.js 16 pelo adaptador OpenNext e aceita domínio próprio. Limite: 300 créditos por mês sem recarga (deploy de produção = 15, banda = 20 por GB), por isso as mudanças devem ser agrupadas antes de publicar em produção.
+- Supabase Free pausa o projeto após 7 dias com pouca atividade: uma Scheduled Function da Netlify lê a tabela `leads` uma vez por dia.
 
 ## Hipóteses e pendências
 
@@ -82,7 +83,7 @@ Meta sugerida antes de publicar: conversão de visita para formulário acima de 
 
 | Pendência | Impacto | Próximo passo |
 |---|---|---|
-| `DATABASE_URL` (Transaction pooler) configurada no host | Gravação de leads em produção | Configurar ao publicar na Vercel; o banco Supabase já tem a tabela `leads` |
+| `DATABASE_URL` (Transaction pooler) configurada no host | Gravação de leads em produção | Configurar ao publicar na Netlify; o banco Supabase já tem a tabela `leads` |
 | CNPJ e e-mail de contato | Rodapé, política de privacidade e dados estruturados LocalBusiness | Fornecer os dados reais; o rodapé mostra só cidade e WhatsApp até lá |
 | Foto e trajetória dos fundadores (opcional) | Seção Sobre mostra nome, cargo e iniciais | Fornecer foto e texto autorizados, se quiser |
 | Revisão da política de privacidade | Texto-base publicado em `/privacidade`, escrito a partir do que o site faz hoje | Revisar com apoio jurídico; atualizar ao ativar analytics |
@@ -107,7 +108,7 @@ Checks técnicos do setup (lint, tipos, testes, build) ficam em [docs/quality.md
 
 Já implementado: todas as seções do MVP (hero, dores, serviços, simulador, como funciona, sobre, FAQ e formulário de diagnóstico gravando no Supabase), rodapé, botão flutuante de WhatsApp, política de privacidade em `/privacidade` e SEO básico (meta tags, Open Graph com imagem provisória, dados estruturados de empresa local, sitemap e robots).
 
-Falta: analytics (aguarda IDs do GA4 e do Meta Pixel) e publicação de uma prévia na Vercel com a `DATABASE_URL` do Supabase. CNPJ e e-mail entram no rodapé quando forem fornecidos.
+Falta: analytics (aguarda IDs do GA4 e do Meta Pixel) e publicação de uma prévia na Netlify com a `DATABASE_URL` do Supabase. CNPJ e e-mail entram no rodapé quando forem fornecidos.
 
 ## Manutenção
 

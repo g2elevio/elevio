@@ -13,7 +13,8 @@ export function getDb() {
   if (!client) {
     client = new Pool({
       connectionString: getDatabaseUrl(),
-      max: 5,
+      // Cada instância serverless atende uma requisição por vez; o pooler do Supabase faz o resto.
+      max: 2,
       connectionTimeoutMillis: 5_000,
       idleTimeoutMillis: 30_000,
     });

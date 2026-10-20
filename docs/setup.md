@@ -78,9 +78,29 @@ Recursos temporários: o servidor de validação na porta 3457 foi encerrado. Ne
 
 Recursos temporários: o cluster PostgreSQL local e o servidor da porta 3458 foram encerrados.
 
+## Hospedagem na Netlify e consumo de banda (20/10/2026)
+
+Fontes consultadas: [preços da Netlify](https://www.netlify.com/pricing/), [planos por créditos](https://docs.netlify.com/manage/accounts-and-billing/billing/billing-for-credit-based-plans/credit-based-pricing-plans/), [Next.js na Netlify](https://docs.netlify.com/frameworks/next-js/overview/), [Scheduled Functions](https://docs.netlify.com/build/functions/scheduled-functions/), [termos de uso](https://www.netlify.com/legal/terms-of-use/) e [pausa de projetos do Supabase](https://supabase.com/docs/guides/platform/free-project-pausing).
+
+| Decisão | Motivo e fonte |
+|---|---|
+| Netlify Free em vez de Vercel Hobby | O Hobby da Vercel é só para uso pessoal e não comercial. Os termos da Netlify não restringem o Free a uso pessoal (o texto do Self-Serve Subscription Agreement não foi conferido). O adaptador OpenNext suporta Next.js 13.5 ou superior |
+| `prefetch={false}` em todos os `<Link>` | Medido com Playwright a 390 px contra `pnpm start`, rolando a home inteira: 248 KB transferidos antes, 226 KB depois. Os 5 prefetches RSC de `/` e `/privacidade` somavam cerca de 23 KB por visita |
+| Pool com `max: 2` | Cada instância de Netlify Function atende uma requisição por vez; o Transaction pooler do Supabase concentra as conexões |
+| Keep-alive diário (`@daily`) via Scheduled Function | O Supabase Free pausa o projeto após 7 dias de pouca atividade, e a doc diz que algumas requisições por dia costumam bastar. Disponível no plano Free; o agendamento vai em `netlify.toml`, sem a dependência `@netlify/functions`. Custo estimado: menos de 0,1 crédito por mês |
+
+O restante da visita é o runtime do React e do Next (cerca de 150 KB comprimidos, cacheados como imutáveis), a fonte Manrope (25 KB) e o CSS (12 KB). O código da aplicação no cliente soma cerca de 14 KB. Não há imagens raster na página.
+
+| Item | Estado | Evidência |
+|---|---|---|
+| `pnpm check` | Validado | 8 arquivos e 33 testes aprovados; todas as rotas continuam estáticas |
+| Keep-alive contra PostgreSQL 17 local (Docker) | Validado | Função empacotada com esbuild: 204 com o banco no ar, 500 com o banco fora do ar e 500 sem `DATABASE_URL`. O log traz só o código do erro (`ECONNREFUSED`, `unknown`). Container e bundle removidos |
+| Keep-alive no Supabase em produção | Pendente | Depois do primeiro deploy de produção, usar **Run now** em Functions → `supabase-keepalive` e conferir o status 204 no log |
+| Deploy na Netlify | Pendente | Conectar o repositório e definir `DATABASE_URL` (Transaction pooler) e `SITE_URL` (domínio próprio) nas variáveis do site |
+
 ## Pendências e próxima entrega
 
 - Decisões externas do produto: ver a tabela de pendências em [PRODUCT.md](../PRODUCT.md#hipóteses-e-pendências) (CNPJ, e-mail, revisão jurídica da política de privacidade, IDs de analytics, identidade visual).
 - Ferramentas do cliente: conferir Ponytail, Caveman, Superpowers, RTK, Graphify e Context7 na máquina de uso e atualizar a tabela de componentes.
-- Próxima entrega: analytics (aguarda IDs) e publicação na Vercel (ver [PRODUCT.md](../PRODUCT.md#próxima-entrega)).
+- Próxima entrega: analytics (aguarda IDs) e publicação na Netlify (ver [PRODUCT.md](../PRODUCT.md#próxima-entrega)).
 - Code review sugerido para a captura de leads: 4 ciclos, por envolver dados pessoais e LGPD. Focos: (1) validação e segurança da Server Action, (2) LGPD e logs, (3) acessibilidade do formulário, (4) integração e checks. Prompt: "Faça 4 ciclos de code review da captura de leads: validação/segurança da Server Action, LGPD e ausência de dados pessoais em logs, acessibilidade do formulário e integração final. Rode `pnpm check` a cada correção."

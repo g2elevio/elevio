@@ -89,7 +89,7 @@ export function LeadForm() {
           <label htmlFor={`${id}-consent`} className="text-sm leading-relaxed text-muted">{CONSENT_TEXT}</label>
         </div>
         <p className="mt-1 pl-8 text-sm">
-          <Link href="/privacidade" target="_blank" className="text-brand-cyan underline underline-offset-4">
+          <Link href="/privacidade" prefetch={false} target="_blank" className="text-brand-cyan underline underline-offset-4">
             Leia a política de privacidade
           </Link>
         </p>

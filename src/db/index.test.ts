@@ -28,7 +28,7 @@ it("reuses one bounded pool and replaces it after explicit shutdown", async () =
   const first = getDb();
   expect(getDb()).toBe(first);
   expect(Pool).toHaveBeenCalledTimes(1);
-  expect(Pool).toHaveBeenCalledWith(expect.objectContaining({ max: 5, connectionTimeoutMillis: 5_000 }));
+  expect(Pool).toHaveBeenCalledWith(expect.objectContaining({ max: 2, connectionTimeoutMillis: 5_000 }));
   const pool = vi.mocked(Pool).mock.results[0]?.value;
   expect(pool).toBeDefined();
   await closeDatabase();
