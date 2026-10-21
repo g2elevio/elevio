@@ -34,6 +34,7 @@
 - `src/components/simulator.tsx`: slider estilizado (`.range`, preenchimento por `--fill`) com valor em `<output>`, campo da taxa atual (1 a 50%), resultados em `aria-live`, barras comparativas decorativas e a premissa de +20% sempre visível com o aviso de estimativa.
 - `diagnosis-cta.tsx` + `lead-form.tsx`: painel final com borda animada e o formulário. Campos com rótulo visível, erros por campo ligados via `aria-describedby`, `aria-invalid`, mensagem geral com `role="alert"`, botão desabilitado com indicador durante o envio e checkbox de consentimento desmarcado, com link para a política (abre em nova aba).
 - `whatsapp-button.tsx`: botão fixo de 56 px, `emerald-600` com ícone branco, pulso suave e dica "Fale com a gente" no hover/foco. O rodapé tem respiro inferior (`pb-24`) para o botão não cobrir os links.
+- Aviso de cookies (`analytics.tsx`): cartão fixo no rodapé da tela, opaco (`bg-surface`), acima do botão de WhatsApp (`z-55`) e sem bloquear a página nem roubar o foco. Recusar (`btn-ghost`) e Aceitar (`btn-primary`) têm o mesmo tamanho. "Preferências de cookies" no rodapé reabre o aviso.
 - `site-footer.tsx`: logo, slogan, cidade, navegação, WhatsApp e política. CNPJ e e-mail entram quando forem fornecidos.
 - `src/app/opengraph-image.tsx`: 1200×630 a partir do banner da marca, com o slogan oficial no lugar da frase do banner e sem o marcador de endereço.
 - `src/app/privacidade/page.tsx`: seções em cartões de vidro, com link de volta.

@@ -26,4 +26,4 @@ A página e os checks rodam sem banco. Para enviar o formulário de diagnóstico
 
 ## Próxima entrega
 
-Analytics (aguarda IDs do GA4 e do Meta Pixel) e publicação na Netlify. Detalhes em [PRODUCT.md](PRODUCT.md#próxima-entrega).
+Ativar o GA4 (aguarda o ID), Meta Pixel (aguarda o ID) e publicação na Netlify. Detalhes em [PRODUCT.md](PRODUCT.md#próxima-entrega).

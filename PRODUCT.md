@@ -86,8 +86,9 @@ Meta sugerida antes de publicar: conversão de visita para formulário acima de 
 | `DATABASE_URL` (Transaction pooler) configurada no host | Gravação de leads em produção | Configurar ao publicar na Netlify; o banco Supabase já tem a tabela `leads` |
 | CNPJ e e-mail de contato | Rodapé, política de privacidade e dados estruturados LocalBusiness | Fornecer os dados reais; o rodapé mostra só cidade e WhatsApp até lá |
 | Foto e trajetória dos fundadores (opcional) | Seção Sobre mostra nome, cargo e iniciais | Fornecer foto e texto autorizados, se quiser |
-| Revisão da política de privacidade | Texto-base publicado em `/privacidade`, escrito a partir do que o site faz hoje | Revisar com apoio jurídico; atualizar ao ativar analytics |
-| IDs do GA4 e do Meta Pixel; banner de consentimento de cookies | Analytics e conformidade LGPD | Criar as propriedades e decidir o modelo de consentimento |
+| Revisão da política de privacidade | Texto-base publicado em `/privacidade`, escrito a partir do que o site faz hoje | Revisar com apoio jurídico; o trecho do Google Analytics aparece sozinho quando o GA4 é ativado; atualizar ao ativar o Meta Pixel |
+| ID do GA4 (`GA_MEASUREMENT_ID`) | GA4, aviso de cookies e eventos de conversão já implementados (21/10/2026), desligados até haver ID | Criar a propriedade GA4, definir o ID na Netlify e fazer deploy; marcar `generate_lead` e `whatsapp_click` como eventos principais |
+| ID do Meta Pixel | Conversões de anúncios no Meta | Fornecer o ID quando houver anúncios no Meta; o aviso de cookies e a política precisam citar o Pixel |
 | Domínio | `SITE_URL` e URLs canônicas | Com o domínio, definir `SITE_URL` no host. A identidade visual (logo, cores e banner) foi fornecida em 16/10/2026 e aplicada ao site |
 | Respostas oficiais do FAQ (preço, prazo, contrato) | FAQ publicado sem valores: preço, prazo e condições remetem à proposta | Revisar o texto e trocar quando houver respostas fixas |
 
@@ -108,7 +109,7 @@ Checks técnicos do setup (lint, tipos, testes, build) ficam em [docs/quality.md
 
 Já implementado: todas as seções do MVP (hero, dores, serviços, simulador, como funciona, sobre, FAQ e formulário de diagnóstico gravando no Supabase), rodapé, botão flutuante de WhatsApp, política de privacidade em `/privacidade` e SEO básico (meta tags, Open Graph com imagem provisória, dados estruturados de empresa local, sitemap e robots).
 
-Falta: analytics (aguarda IDs do GA4 e do Meta Pixel) e publicação de uma prévia na Netlify com a `DATABASE_URL` do Supabase. CNPJ e e-mail entram no rodapé quando forem fornecidos.
+Falta: ativar o GA4 (aguarda o ID), Meta Pixel (aguarda o ID) e publicação de uma prévia na Netlify com a `DATABASE_URL` do Supabase. CNPJ e e-mail entram no rodapé quando forem fornecidos.
 
 ## Manutenção
 

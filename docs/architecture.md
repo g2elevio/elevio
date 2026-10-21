@@ -50,6 +50,8 @@ src/
 │   ├── integration-flow.tsx # banner "tudo conectado" em Serviços
 │   ├── diagnosis-cta.tsx # seção final #diagnostico com o formulário
 │   ├── lead-form.tsx   # formulário de diagnóstico (client, useActionState)
+│   ├── analytics.tsx   # client: aviso de cookies, gtag.js após o aceite e cliques em links wa.me
+│   ├── cookie-preferences-button.tsx # client: reabre o aviso (link do rodapé)
 │   ├── whatsapp-button.tsx # botão fixo de WhatsApp, em todas as páginas
 │   └── whatsapp-icon.tsx
 ├── db/
@@ -67,6 +69,7 @@ src/
 │   ├── estimate.ts     # cálculo e premissa AUTOMATION_UPLIFT (+20% relativo)
 │   └── estimate.test.ts
 └── lib/
+    ├── analytics.ts    # consentimento (localStorage), init do gtag e trackEvent (só navegador)
     ├── env-schema.ts   # schemas Zod de ambiente, erro sem vazar valores
     ├── env.ts          # leitura de ambiente (server-only), inclusive getSiteUrl()
     ├── logger.ts       # Pino com redação de segredos (server-only)
@@ -85,10 +88,18 @@ vitest.config.mts
 
 Captura de leads (implementada):
 
-1. A página é estática (Server Components: hero, seções de conteúdo, FAQ com `<details>`, rodapé, botão de WhatsApp e `/privacidade`). Os componentes de cliente são `LeadForm` e `Simulator`; analytics também será ilha de cliente.
+1. A página é estática (Server Components: hero, seções de conteúdo, FAQ com `<details>`, rodapé, botão de WhatsApp e `/privacidade`). Os componentes de cliente são `LeadForm`, `Simulator` e `Analytics` (só renderizado com `GA_MEASUREMENT_ID`).
 2. `LeadForm` envia para `submitLead` via `useActionState`. A action descarta envios com o campo honeypot preenchido, valida com `leadSchema` e grava com `saveLead`, junto do texto de consentimento e do horário.
 3. Em erro de validação, devolve mensagens por campo e os valores digitados (o React reinicia o formulário após a action; os valores voltam por `defaultValue`). Em falha de banco, registra só o código do erro e pede nova tentativa.
-4. Em sucesso, o cliente navega para `wa.me/5545999968287` com nome e segmento na mensagem. O evento de conversão entra com a configuração de analytics.
+4. Em sucesso, o cliente navega para `wa.me/5545999968287` com nome e segmento na mensagem. Antes de navegar, dispara o evento `generate_lead` do GA4 (sem parâmetros pessoais, por beacon), se o visitante aceitou os cookies.
+
+Analytics (GA4, implementado; ativo quando `GA_MEASUREMENT_ID` estiver definido):
+
+1. O layout lê `getGaMeasurementId()` no build. Sem ID, não há aviso de cookies, script do Google nem link de preferências, e a política mostra o texto sem analytics.
+2. `Analytics` lê a escolha com `useSyncExternalStore` (só no navegador, sem divergir do HTML estático). Sem escolha, mostra o aviso com Recusar e Aceitar, de mesmo peso.
+3. Só depois do aceite o `gtag.js` é carregado (`next/script`, após a hidratação), com Consent Mode: análise e medição de anúncios concedidas, `ad_personalization` (remarketing) negado.
+4. Eventos: `generate_lead` no envio do formulário e `whatsapp_click` em qualquer link `wa.me` (um ouvinte de clique delegado). Para usar no Google Ads, marque-os como eventos principais no GA4 e importe-os como conversões.
+5. Recusar depois de aceitar define `ga-disable-<ID>`, remove `window.gtag` e apaga os cookies `_ga*`, `_gid`, `_gat*` e `_gcl_*`.
 
 Regras já aplicadas pelo lint: arquivos em `src/app` e `src/components` não importam `@/db`; `console` direto é proibido (usar o logger no servidor); `update`/`delete` do Drizzle exigem `where`.
 

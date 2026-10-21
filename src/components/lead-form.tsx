@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useActionState, useEffect, useId } from "react";
 import { submitLead } from "@/features/leads/actions";
 import { CHALLENGES, CONSENT_TEXT, SEGMENTS } from "@/features/leads/options";
+import { trackEvent } from "@/lib/analytics";
 import type { LeadField, LeadFormState } from "@/features/leads/validation";
 import { cn } from "@/lib/utils";
 
@@ -20,7 +21,10 @@ export function LeadForm() {
   const values = state.status === "error" ? state.values : {};
 
   useEffect(() => {
-    if (state.status === "success") window.location.assign(state.whatsappUrl);
+    if (state.status !== "success") return;
+    // Conversão sem dados pessoais; o gtag envia por beacon, que sobrevive à navegação para o WhatsApp.
+    trackEvent("generate_lead", { transport_type: "beacon" });
+    window.location.assign(state.whatsappUrl);
   }, [state]);
 
   if (state.status === "success") {

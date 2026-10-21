@@ -74,7 +74,7 @@ Recursos temporários: o servidor de validação na porta 3457 foi encerrado. Ne
 | Migration `0000_create_leads.sql` | Validado em PostgreSQL 16 local | `pnpm db:migrate` aplicado; `\d leads` mostra as 8 colunas e "row security enabled" |
 | Fluxo do formulário | Validado em PostgreSQL 16 local | Playwright a 360 px: envio inválido mostra 4 erros por campo e mantém nome/telefone digitados; envio válido grava 1 linha com telefone `5545999968287`, consentimento e horário, e navega para `wa.me/5545999968287?text=Olá! Sou Maria Teste, do segmento Odontologia...` |
 | Supabase | Validado | Workflow "Migrar banco" concluído com sucesso em 16/10/2026 (GitHub Actions); conexão da aplicação em produção ainda pendente até a publicação |
-| Evento de conversão no analytics | Pendente | Depende dos IDs de GA4 e Meta Pixel |
+| Evento de conversão no analytics | Validado sem GA real (21/10/2026) | Ver seção do Google Analytics; Meta Pixel pendente |
 
 Recursos temporários: o cluster PostgreSQL local e o servidor da porta 3458 foram encerrados.
 
@@ -98,9 +98,26 @@ O restante da visita é o runtime do React e do Next (cerca de 150 KB comprimido
 | Keep-alive no Supabase em produção | Pendente | Depois do primeiro deploy de produção, usar **Run now** em Functions → `supabase-keepalive` e conferir o status 204 no log |
 | Deploy na Netlify | Pendente | Conectar o repositório e definir `DATABASE_URL` (Transaction pooler) e `SITE_URL` (domínio próprio) nas variáveis do site |
 
+## Google Analytics 4 com consentimento (21/10/2026)
+
+| Decisão | Motivo e fonte |
+|---|---|
+| `next/script` + gtag próprio, sem `@next/third-parties` | O componente `GoogleAnalytics` carrega o gtag.js sem esperar consentimento ([guia de bibliotecas de terceiros](https://nextjs.org/docs/app/guides/third-party-libraries)); a LGPD pede aceite antes dos cookies. Nenhuma dependência nova |
+| Carregar o gtag.js só depois do aceite | Quem recusa não baixa o script nem recebe cookies; o desempenho de quem não aceita fica igual ao de antes |
+| ID em `GA_MEASUREMENT_ID` (sem `NEXT_PUBLIC_`) | Lido por Server Components no build e passado como prop; o ID é público por natureza |
+| `<Script id="google-tag">` | Com `id="gtag"`, o navegador expõe o elemento em `window.gtag` (acesso nomeado), e o init era pulado. Achado no teste com navegador |
+| Banner opaco, sem a classe `glass` | O `background` da `glass` zera a cor de fundo e deixava o conteúdo aparecer atrás do texto |
+
+| Item | Estado | Evidência |
+|---|---|---|
+| Fluxo de consentimento | Validado com `GA_MEASUREMENT_ID=G-TEST123`, Playwright a 390 px, Google bloqueado | Aviso na primeira visita sem nenhuma requisição ao Google; Recusar grava `denied` e nada carrega, nem após recarregar; "Preferências de cookies" reabre; Aceitar carrega `gtag/js?id=G-TEST123` e enfileira `consent default`, `js`, `config`; clique no botão de WhatsApp gera `whatsapp_click`; revogar define `ga-disable-G-TEST123` e remove `window.gtag`; sem erros no console |
+| `generate_lead` | Validado com PostgreSQL 17 local (Docker) | Envio real gravou 1 lead e enfileirou `["event","generate_lead",{"transport_type":"beacon"}]` antes da navegação para `wa.me`. Container removido |
+| Política de privacidade | Validado | Com ID, `/privacidade` mostra o trecho do Google Analytics; sem ID, o texto anterior |
+| Dados no GA real | Pendente | Depende do ID da propriedade; conferir em Relatórios → Tempo real depois do deploy |
+
 ## Pendências e próxima entrega
 
 - Decisões externas do produto: ver a tabela de pendências em [PRODUCT.md](../PRODUCT.md#hipóteses-e-pendências) (CNPJ, e-mail, revisão jurídica da política de privacidade, IDs de analytics, identidade visual).
 - Ferramentas do cliente: conferir Ponytail, Caveman, Superpowers, RTK, Graphify e Context7 na máquina de uso e atualizar a tabela de componentes.
-- Próxima entrega: analytics (aguarda IDs) e publicação na Netlify (ver [PRODUCT.md](../PRODUCT.md#próxima-entrega)).
+- Próxima entrega: ativar o GA4 e o Meta Pixel (aguardam IDs) e publicação na Netlify (ver [PRODUCT.md](../PRODUCT.md#próxima-entrega)).
 - Code review sugerido para a captura de leads: 4 ciclos, por envolver dados pessoais e LGPD. Focos: (1) validação e segurança da Server Action, (2) LGPD e logs, (3) acessibilidade do formulário, (4) integração e checks. Prompt: "Faça 4 ciclos de code review da captura de leads: validação/segurança da Server Action, LGPD e ausência de dados pessoais em logs, acessibilidade do formulário e integração final. Rode `pnpm check` a cada correção."

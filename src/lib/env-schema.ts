@@ -11,6 +11,9 @@ export const databaseUrlSchema = z.string().refine((value) => {
 
 export const siteUrlSchema = z.url({ protocol: /^https?$/ });
 
+// ID de medição do GA4: público por natureza (vai no HTML), por isso não precisa de NEXT_PUBLIC_.
+export const gaMeasurementIdSchema = z.string().regex(/^G-[A-Z0-9]+$/).optional();
+
 export const logLevelSchema = z.enum(["trace", "debug", "info", "warn", "error", "fatal", "silent"]).default("info");
 
 export function parseEnv<T>(key: string, value: unknown, schema: z.ZodType<T>): T {

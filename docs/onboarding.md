@@ -22,6 +22,7 @@ Variáveis de ambiente ficam em `.env.local` (ignorado pelo Git), a partir de `.
 | `DATABASE_URL` | Conexão PostgreSQL da aplicação | Para enviar o formulário |
 | `DATABASE_URL_UNPOOLED` | Conexão direta para migrations, se o provedor exigir | Não |
 | `LOG_LEVEL` | Nível do Pino (padrão `info`) | Não |
+| `GA_MEASUREMENT_ID` | ID de medição do GA4 (`G-...`), lido no build. Vazio desliga Google Analytics, aviso de cookies e o trecho de analytics da política | Não; defina na Netlify (escopo Builds) para ativar |
 | `SITE_URL` | Endereço público usado em Open Graph, sitemap e dados estruturados | Sim na Netlify (o fallback automático só existe na Vercel); localmente, `http://localhost:3000`. Use o domínio próprio |
 
 ## Banco

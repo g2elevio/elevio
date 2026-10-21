@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { getDatabaseUrl, getLogLevel, getSiteUrl } from "./env";
+import { getDatabaseUrl, getGaMeasurementId, getLogLevel, getSiteUrl } from "./env";
 
 vi.mock("server-only", () => ({}));
 afterEach(() => vi.unstubAllEnvs());
@@ -31,6 +31,17 @@ describe("server environment", () => {
     vi.stubEnv("LOG_LEVEL", "not-a-level");
     expect(() => getDatabaseUrl()).toThrow("DATABASE_URL");
     expect(() => getLogLevel()).toThrow("LOG_LEVEL");
+  });
+
+  it("treats a missing GA4 ID as analytics off and rejects malformed IDs", () => {
+    vi.stubEnv("GA_MEASUREMENT_ID", undefined);
+    expect(getGaMeasurementId()).toBeUndefined();
+    vi.stubEnv("GA_MEASUREMENT_ID", "");
+    expect(getGaMeasurementId()).toBeUndefined();
+    vi.stubEnv("GA_MEASUREMENT_ID", "G-AB12CD34EF");
+    expect(getGaMeasurementId()).toBe("G-AB12CD34EF");
+    vi.stubEnv("GA_MEASUREMENT_ID", "UA-1234-1");
+    expect(() => getGaMeasurementId()).toThrow("GA_MEASUREMENT_ID");
   });
 
   it("resolves the public site URL from SITE_URL, then Vercel, then localhost", () => {

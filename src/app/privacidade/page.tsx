@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { getGaMeasurementId } from "@/lib/env";
 import { site } from "@/lib/site";
 import { WHATSAPP_CONTACT_URL } from "@/lib/whatsapp";
 
@@ -11,10 +12,12 @@ export const metadata: Metadata = {
 };
 
 // Texto-base escrito a partir do que o site faz hoje. Revisar com apoio jurídico (pendência em PRODUCT.md)
-// e atualizar quando entrarem analytics, CNPJ e e-mail de contato.
-const UPDATED_AT = "16 de outubro de 2026";
+// e atualizar quando entrarem Meta Pixel, CNPJ e e-mail de contato. A parte do Google Analytics só aparece
+// quando GA_MEASUREMENT_ID está definido, junto com o aviso de cookies.
+const UPDATED_AT = "21 de outubro de 2026";
 
 export default function PrivacyPage() {
+  const analytics = Boolean(getGaMeasurementId());
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-8 px-4 pt-32 pb-20 leading-relaxed text-muted sm:px-6 [&_a]:text-brand-cyan">
       <div className="flex flex-col gap-4">
@@ -45,11 +48,28 @@ export default function PrivacyPage() {
           <li>segmento da sua empresa e principal dificuldade, escolhidos numa lista;</li>
           <li>o texto do consentimento que você aceitou, com a data e a hora do aceite.</li>
         </ul>
-        <p>
-          Hoje o site não usa cookies de análise nem de publicidade. Se passarmos a usar ferramentas como Google
-          Analytics ou Meta Pixel, esta política será atualizada antes disso, e pediremos seu consentimento quando a
-          lei exigir.
-        </p>
+        {analytics ? (
+          <>
+            <p>
+              Se você aceitar no aviso de cookies, usamos o Google Analytics, do Google, para medir as visitas e o
+              resultado dos nossos anúncios: páginas vistas, origem do acesso (busca, anúncio, rede social), tipo de
+              dispositivo, região aproximada e ações como enviar o formulário ou tocar num link do WhatsApp. Para
+              isso, o Google Analytics grava cookies no seu navegador, como o <code>_ga</code>. Ele não recebe seu
+              nome nem seu WhatsApp, e não usamos esses dados para anúncios personalizados (remarketing).
+            </p>
+            <p>
+              Sem o seu aceite, nada disso é carregado. Você pode mudar a escolha a qualquer momento em
+              &quot;Preferências de cookies&quot;, no rodapé do site; ao recusar, apagamos esses cookies do seu
+              navegador.
+            </p>
+          </>
+        ) : (
+          <p>
+            Hoje o site não usa cookies de análise nem de publicidade. Se passarmos a usar ferramentas como Google
+            Analytics ou Meta Pixel, esta política será atualizada antes disso, e pediremos seu consentimento quando
+            a lei exigir.
+          </p>
+        )}
       </Section>
 
       <Section title="Para que usamos">
@@ -59,7 +79,7 @@ export default function PrivacyPage() {
         </p>
         <p>
           A base legal é o seu consentimento (art. 7º, I, da LGPD), dado ao marcar a caixa de autorização antes de
-          enviar o formulário.
+          enviar o formulário{analytics ? " e, para os cookies de análise, ao aceitar o aviso de cookies" : ""}.
         </p>
       </Section>
 
@@ -69,6 +89,13 @@ export default function PrivacyPage() {
           localizados no Canadá, e o site é servido por um provedor de hospedagem. Esses provedores tratam os dados
           apenas para prestar o serviço à {site.name}.
         </p>
+        {analytics ? (
+          <p>
+            Os dados de navegação, quando você aceita os cookies, são tratados pelo Google (Google Analytics), que
+            pode armazená-los fora do Brasil, e guardados pelo prazo de retenção configurado no Google Analytics, de no
+            máximo 14 meses.
+          </p>
+        ) : null}
         <p>
           Depois do envio, o formulário abre o WhatsApp para continuar a conversa. A partir daí, a conversa também segue
           as regras de privacidade do WhatsApp, que é um serviço da Meta.

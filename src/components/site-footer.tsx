@@ -2,13 +2,14 @@ import { MapPin } from "lucide-react";
 import Link from "next/link";
 import { site } from "@/lib/site";
 import { WHATSAPP_CONTACT_URL } from "@/lib/whatsapp";
+import { CookiePreferencesButton } from "./cookie-preferences-button";
 import { Logo } from "./logo";
 import { WhatsappIcon } from "./whatsapp-icon";
 
 const linkClass = "w-fit text-muted transition-colors duration-300 hover:text-foreground";
 
 // CNPJ e e-mail ainda não foram fornecidos (pendência em PRODUCT.md): entram aqui quando existirem.
-export function SiteFooter() {
+export function SiteFooter({ showCookiePreferences }: { showCookiePreferences: boolean }) {
   return (
     <footer className="relative z-1 mt-auto overflow-hidden border-t border-line bg-surface/40">
       <div aria-hidden="true" className="divider-glow absolute inset-x-0 top-0" />
@@ -41,6 +42,7 @@ export function SiteFooter() {
           <Link href="/privacidade" prefetch={false} className={linkClass}>
             Política de privacidade
           </Link>
+          {showCookiePreferences ? <CookiePreferencesButton className={`${linkClass} cursor-pointer text-left`} /> : null}
         </nav>
         <p className="border-t border-line pt-6 text-sm text-subtle sm:col-span-3">
           © {new Date().getFullYear()} {site.name}. Todos os direitos reservados.
