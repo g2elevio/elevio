@@ -57,6 +57,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 - Persistência: Drizzle ORM + PostgreSQL com `pg` (runtime Node.js). Schema em `src/db/schema/`, SQL em `drizzle/`, conexão única em `src/db/index.ts` (pool limitado e lazy).
 - Gere e revise SQL antes de aplicar migrations em destino autorizado; não migre no build ou por request.
+- O banco Supabase é compartilhado com o CRM (repositório `elevio-crm`). Esta landing é dona só de `public.leads` (e do schema `drizzle`); os schemas `crm` e `crm_privado` são do CRM e não devem ser alterados daqui. `crm.leads` tem chave estrangeira para `public.leads` (apagar um lead aqui apaga no CRM, o que atende pedidos de exclusão da LGPD). Antes de mudar ou recriar `public.leads`, avise o CRM: a importação dele lê `name`, `whatsapp`, `segment`, `challenge`, `consent_text`, `consented_at` e `created_at`. Nunca use `drizzle-kit push` neste banco.
 - Valide entradas e ambiente com Zod. Use o logger Pino (`@/lib/logger`) no servidor. Apresentação (`src/app`, `src/components`) chama módulos da funcionalidade, sem importar o cliente de banco.
 - Prefira tipos inferidos, consultas parametrizadas, projeções explícitas, listagens limitadas e DTOs seguros.
 - Consulte fontes oficiais atuais e o canal estável antes de alterar stack/APIs; registre fonte, motivo e resultado em `docs/setup.md`.
