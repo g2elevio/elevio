@@ -3,6 +3,7 @@
 import { logger } from "@/lib/logger";
 import { CONSENT_TEXT } from "./options";
 import { saveLead } from "./repository";
+import { readUtm } from "./utm";
 import { leadSchema, type LeadField, type LeadFormState } from "./validation";
 import { buildWhatsappUrl, WHATSAPP_URL } from "@/lib/whatsapp";
 
@@ -33,6 +34,7 @@ export async function submitLead(_previous: LeadFormState, formData: FormData): 
       challenge: lead.challenge,
       consentText: CONSENT_TEXT,
       consentedAt: new Date(),
+      ...readUtm(formData),
     });
   } catch (error) {
     logger.error({ code: (error as { code?: string }).code }, "Failed to save lead");

@@ -10,6 +10,12 @@ export const leads = pgTable("leads", {
   challenge: text("challenge").notNull(),
   consentText: text("consent_text").notNull(),
   consentedAt: timestamp("consented_at", { withTimezone: true }).notNull(),
+  // Origem vinda do link (UTM). Opcional. O CRM (elevio-crm) copia estas colunas: avise antes de mudar.
+  utmSource: text("utm_source"),
+  utmMedium: text("utm_medium"),
+  utmCampaign: text("utm_campaign"),
+  utmContent: text("utm_content"),
+  utmTerm: text("utm_term"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 }).enableRLS();
 

@@ -105,7 +105,7 @@ Regras já aplicadas pelo lint: arquivos em `src/app` e `src/components` não im
 
 ## Dados e migrations
 
-- Schema em `src/db/schema/`. Tabela `leads`: `id` (uuid), `name`, `whatsapp` (normalizado como 55 + DDD + número), `segment`, `challenge`, `consent_text`, `consented_at`, `created_at`. RLS ligado sem políticas: no Supabase, a API pública (chave anon) não acessa a tabela; a aplicação conecta como dona e não é afetada. Tipos derivados com `$inferInsert`.
+- Schema em `src/db/schema/`. Tabela `leads`: `id` (uuid), `name`, `whatsapp` (normalizado como 55 + DDD + número), `segment`, `challenge`, `consent_text`, `consented_at`, `created_at` e a origem do link (`utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`, opcionais, lidas da URL na hora do envio, sem cookie). O CRM (`elevio-crm`) lê esta tabela. RLS ligado sem políticas: no Supabase, a API pública (chave anon) não acessa a tabela; a aplicação conecta como dona e não é afetada. Tipos derivados com `$inferInsert`.
 - URLs absolutas (Open Graph, canonical, sitemap, robots, JSON-LD) saem de `getSiteUrl()`: `SITE_URL`, senão `VERCEL_PROJECT_PRODUCTION_URL` (definida pela Vercel no build), senão `http://localhost:3000`. As rotas continuam estáticas, então o valor fica fixo no build.
 - `getDb()` valida `DATABASE_URL` e só cria o pool (máx. 2 conexões por instância serverless, timeouts curtos) no primeiro uso. Build, lint e testes não precisam de banco.
 - `pnpm db:generate` gera SQL em `drizzle/` sem conectar. Revise o SQL e aplique com `pnpm db:migrate` só no destino autorizado; `DATABASE_URL_UNPOOLED` é usada para migrations quando o provedor exigir conexão direta.

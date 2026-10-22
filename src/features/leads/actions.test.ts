@@ -36,6 +36,14 @@ it("saves the lead with the consent record and returns the prefilled WhatsApp li
   expect(url.searchParams.get("text")).toContain("Maria Souza, do segmento Odontologia");
 });
 
+it("saves the link origin (UTM) along with the lead", async () => {
+  await submitLead(idle, form({ ...valid, utm_source: "instagram", utm_campaign: "bio", utm_term: "x".repeat(101) }));
+
+  expect(saveLead).toHaveBeenCalledWith(
+    expect.objectContaining({ utmSource: "instagram", utmCampaign: "bio", utmMedium: null, utmTerm: null }),
+  );
+});
+
 it("returns field errors and the typed values without saving", async () => {
   const result = await submitLead(idle, form({ ...valid, whatsapp: "123", consent: "" }));
 

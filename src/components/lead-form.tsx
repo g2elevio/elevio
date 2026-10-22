@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useActionState, useEffect, useId } from "react";
 import { submitLead } from "@/features/leads/actions";
 import { CHALLENGES, CONSENT_TEXT, SEGMENTS } from "@/features/leads/options";
+import { UTM_FIELDS } from "@/features/leads/utm";
 import { trackEvent } from "@/lib/analytics";
 import type { LeadField, LeadFormState } from "@/features/leads/validation";
 import { cn } from "@/lib/utils";
@@ -42,6 +43,16 @@ export function LeadForm() {
     );
   }
 
+  // Origem do link (?utm_source=...), lida na hora do envio: sem cookie e sem guardar nada no navegador.
+  const submitWithOrigin = (formData: FormData) => {
+    const params = new URLSearchParams(window.location.search);
+    for (const name of UTM_FIELDS) {
+      const value = params.get(name);
+      if (value) formData.set(name, value);
+    }
+    formAction(formData);
+  };
+
   const field = (name: LeadField) => ({
     id: `${id}-${name}`,
     name,
@@ -56,7 +67,7 @@ export function LeadForm() {
     ) : null;
 
   return (
-    <form action={formAction} noValidate className="flex flex-col gap-4">
+    <form action={submitWithOrigin} noValidate className="flex flex-col gap-4">
       <div>
         <label htmlFor={`${id}-name`} className="mb-1.5 block text-sm font-semibold">Nome</label>
         <input {...field("name")} type="text" autoComplete="name" required maxLength={100} defaultValue={values.name} className={inputClass} />

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 // Texto-base escrito a partir do que o site faz hoje. Revisar com apoio jurídico (pendência em PRODUCT.md)
 // e atualizar quando entrarem Meta Pixel, CNPJ e e-mail de contato. A parte do Google Analytics só aparece
 // quando GA_MEASUREMENT_ID está definido, junto com o aviso de cookies.
-const UPDATED_AT = "21 de outubro de 2026";
+const UPDATED_AT = "22 de outubro de 2026";
 
 export default function PrivacyPage() {
   const analytics = Boolean(getGaMeasurementId());
@@ -46,7 +46,12 @@ export default function PrivacyPage() {
           <li>nome;</li>
           <li>número de WhatsApp;</li>
           <li>segmento da sua empresa e principal dificuldade, escolhidos numa lista;</li>
-          <li>o texto do consentimento que você aceitou, com a data e a hora do aceite.</li>
+          <li>o texto do consentimento que você aceitou, com a data e a hora do aceite;</li>
+          <li>
+            a origem da sua visita, quando o link que você usou trouxer essa informação (parâmetros como{" "}
+            <code>utm_source</code> e <code>utm_campaign</code>, que indicam, por exemplo, se você veio de um anúncio
+            ou do nosso Instagram). Isso vem do próprio link; não usamos cookies para isso.
+          </li>
         </ul>
         {analytics ? (
           <>
@@ -80,6 +85,15 @@ export default function PrivacyPage() {
         <p>
           A base legal é o seu consentimento (art. 7º, I, da LGPD), dado ao marcar a caixa de autorização antes de
           enviar o formulário{analytics ? " e, para os cookies de análise, ao aceitar o aviso de cookies" : ""}.
+        </p>
+      </Section>
+
+      <Section title="Contatos por outros canais">
+        <p>
+          Quando você fala com a {site.name} por outros canais, como Instagram, WhatsApp ou indicação, registramos seu
+          nome, o contato que você usou e o assunto no nosso sistema interno de atendimento, só para responder e
+          acompanhar a conversa. A base legal é a execução de procedimentos preliminares a um contrato, a seu pedido
+          (art. 7º, V, da LGPD). Você pode pedir a exclusão a qualquer momento, como descrito abaixo.
         </p>
       </Section>
 
