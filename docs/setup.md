@@ -115,6 +115,22 @@ O restante da visita é o runtime do React e do Next (cerca de 150 KB comprimido
 | Política de privacidade | Validado | Com ID, `/privacidade` mostra o trecho do Google Analytics; sem ID, o texto anterior |
 | Dados no GA real | Pendente | Depende do ID da propriedade; conferir em Relatórios → Tempo real depois do deploy |
 
+## Robôs de varredura e 404 na Netlify (12/11/2026)
+
+Nas 24 h até 12/11 às 14h30 (UTC), 198 das 203 chamadas da função do servidor (`___netlify-server-handler`) deram erro: 191 eram 404 de robôs procurando WordPress, PHP e arquivos de segredo (`/wp-admin/install.php`, `/.env*`, `/.git/*`, `/wp-includes/wlwmanifest.xml` etc.). Nenhum usuário real foi afetado, mas cada 404 de rota inexistente passa pela função do Next e gasta créditos do plano Free (equipe compartilhada com o CRM). O adaptador já guarda na CDN os 404 de URLs terminadas em `.php`, por isso `/wp-login.php` não chamava a função; os demais caminhos não eram cacheados.
+
+| Decisão | Motivo e fonte |
+|---|---|
+| Regras `[[redirects]]` com `status = 404` e `force = true` em `netlify.toml`, apontando para `public/nao-encontrado.html` | A equipe da Netlify recomenda 404 forçado para caminhos explorados por robôs, já que todo 404 do Next passa pela função ([fórum](https://answers.netlify.com/t/next-js-site-404s-are-triggering-a-next-js-ssr-handler-function-invocation/90093)). A página estática sai direto da CDN |
+| Lista explícita, sem `*` no meio do segmento | A Netlify só aceita `*` como segmento final; variações de `.env` ficam listadas e `/:dir/.env` cobre subpastas até três níveis |
+| `public/apple-touch-icon.png` (180 px) e reescrita de `-precomposed` para ele | Navegadores da Apple pedem esses arquivos na raiz; sem eles, cada pedido virava 404 pela função (3,3 s a frio) |
+| Edge Function ou `proxy.ts` descartados | Também executam a cada requisição; as regras estáticas não executam código |
+
+| Item | Estado | Evidência |
+|---|---|---|
+| `pnpm check` e TOML válido | Validado | 87 regras lidas pelo `tomllib`; todas as rotas continuam estáticas |
+| Regras antes da função em produção | Ver abaixo | Conferido com `curl` e pela observabilidade da Netlify depois do deploy |
+
 ## Pendências e próxima entrega
 
 - Decisões externas do produto: ver a tabela de pendências em [PRODUCT.md](../PRODUCT.md#hipóteses-e-pendências) (CNPJ, e-mail, revisão jurídica da política de privacidade, IDs de analytics, identidade visual).

@@ -3,3 +3,531 @@
 # Ping diário no Supabase para o plano Free não pausar o projeto (docs/setup.md).
 [functions."supabase-keepalive"]
   schedule = "@daily"
+
+# Robôs de varredura pedem caminhos de WordPress, PHP e arquivos de segredo (.env, .git...).
+# Sem estas regras, cada 404 passa pela função do servidor do Next e gasta créditos.
+# As regras respondem 404 direto da CDN com uma página estática (public/nao-encontrado.html).
+# Nenhuma delas cobre rota real do site (/, /privacidade, /robots.txt, /sitemap.xml, /_next/*).
+# Ver docs/setup.md, "Robôs de varredura e 404 na Netlify".
+
+[[redirects]]
+  from = "/apple-touch-icon-precomposed.png"
+  to = "/apple-touch-icon.png"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/wp-admin/*"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/wp-includes/*"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/wp-content/*"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/wp-json/*"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/wordpress"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/wordpress/*"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/wp"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/wp/*"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/:dir/wp-includes/*"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/:dir/wp-admin/*"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/wp-login.php"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/wp-config.php"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/wp-config.php.bak"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/xmlrpc.php"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/index.php"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/phpinfo.php"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/info.php"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/old"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/old/*"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/backup"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/backup/*"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env.local"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env.production"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env.development"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env.dev"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env.staging"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env.test"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env.bak"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env.save"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env.swp"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env.dist"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env.old"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env.example"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env.sample"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env.backup"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env.prod"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env.aws"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env.openai"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env.php"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/:dir/.env"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/:dir/:sub/.env"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/:dir/:sub/:sub2/.env"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.git/*"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.git-credentials"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.gitmodules"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.gitlab-ci.yml"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.aws/*"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.docker/*"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.ssh/*"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.vscode/*"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.claude/*"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.npmrc"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.netrc"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.s3cfg"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.htaccess"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.amplifyrc"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/vendor/*"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/actuator/*"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/api/actuator/*"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/_profiler/*"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/cgi-bin/*"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/phpmyadmin/*"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/Dockerfile"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/docker-compose.yml"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/composer.json"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/web.config"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/database.sql"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/server-info"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/server-status"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env-sample"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env-example"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/env"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/env.js"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/env.txt"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/config.env"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/credentials.json"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/credentials.ini"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/auth.json"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/appsettings.json"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/appsettings.Development.json"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/appsettings.Production.json"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/sentry.properties"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/aws-exports.js"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/runtime-config.js"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/env-config.js"
+  to = "/nao-encontrado.html"
+  status = 404
+  force = true
